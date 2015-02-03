@@ -8,12 +8,14 @@ public class addPartModel {
 	private String name;
 	private String vendor;
 	private int quantity;
+	private int id;
 	
-	public addPartModel(String num, String name, String vendor, int quantity){
+	public addPartModel(String num, String name, String vendor, int quantity, int id){
 		this.num = num;
 		this.name = name;
 		this.vendor = vendor;
 		this.quantity = quantity;
+		this.id = id;
 	}
 	
 	/*
@@ -52,5 +54,9 @@ public class addPartModel {
 	
 	public int getQuantity(){
 		return this.quantity;
+	}
+	
+	public int getId(){
+		return this.id;
 	}
 }

@@ -19,6 +19,7 @@ public class inventoryModel {
 	private int flag = 0;
 	private int arrayIndex = 0;
 	private int nameIndex = 0;
+	private int id = 1;
 	public ArrayList<addPartModel> partsList = new ArrayList();
 	public ArrayList<String> nameArray = new ArrayList();
 	
@@ -42,9 +43,10 @@ public class inventoryModel {
 	 * adds new instance of addPartModel to arraylist and the name value to arraylist of names
 	 */
 	public void addPart(String num, String name, String vendor, int quantity){
-		newPart = new addPartModel(num, name, vendor, quantity);
+		newPart = new addPartModel(num, name, vendor, quantity, id);
 		nameArray.add(name);
 		partsList.add(newPart);	
+		id++;
 	}		
 	
 	/*
