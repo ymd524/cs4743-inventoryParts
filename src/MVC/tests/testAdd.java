@@ -42,4 +42,12 @@ public class testAdd {
 		model.updatePart("H4G789KJM83S", "part2", "vendor2", 9);
 		assertEquals("part2", model.getCurrentObject().getName());
 	}
+	
+	@Test
+	public void testPartId() {
+		model.addPart("8976897sdsh7", "part1", "vendor1", 5);
+		model.addPart("8976897sdsh7", "part1", "vendor1", 5);
+		model.getObjectByInt(1);
+		assertEquals(2, model.getCurrentObject().getId());
+	}
 }
