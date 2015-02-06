@@ -8,12 +8,14 @@ public class addPartModel {
 	private String name;
 	private String vendor;
 	private int quantity;
+	private String unit;
 	
-	public addPartModel(String num, String name, String vendor, int quantity){
+	public addPartModel(String num, String name, String vendor, int quantity, String unit){
 		this.num = num;
 		this.name = name;
 		this.vendor = vendor;
 		this.quantity = quantity;
+		this.unit = unit;
 	}
 	
 	/*
@@ -35,6 +37,10 @@ public class addPartModel {
 		this.quantity = s;
 	}
 	
+	public void setUnit(String unit) {
+		this.unit = unit;
+	}
+
 	/*
 	 * getters
 	 */
@@ -52,5 +58,9 @@ public class addPartModel {
 	
 	public int getQuantity(){
 		return this.quantity;
+	}
+	
+	public String getUnit() {
+		return unit;
 	}
 }
