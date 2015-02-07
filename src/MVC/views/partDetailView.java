@@ -14,17 +14,22 @@ public class partDetailView extends JFrame{
 	private inventoryModel model;
 	private JPanel detailPanel;
 	private JPanel buttonPanel;
-	private JLabel num = new JLabel("Part #: ");
-	private JLabel name = new JLabel("Part name: ");
-	private JLabel ven = new JLabel("Vendor: ");
-	private JLabel q = new JLabel("Quantity: ");
+	private JLabel idLabel = new JLabel("Part ID: ");
+	private JLabel numLabel = new JLabel("Part #: ");
+	private JLabel nameLabel = new JLabel("Part name: ");
+	private JLabel venLabel = new JLabel("Vendor: ");
+	private JLabel qLabel = new JLabel("Quantity: ");
+	private JLabel extLabel = new JLabel("Ext. Part #: ");
 	private JButton editButton = new JButton("Edit Part");
 	private JButton deleteButton = new JButton("Delete Part");
 	private String partName;
 	private String partNumber;
+	private String extNumber;
 	private String  partVendor;
 	private int partQuantity;
 	private String partUnit;
+	private int partId;
+
 
 	public partDetailView(inventoryModel model){
 		super("Part Detail");
@@ -34,10 +39,14 @@ public class partDetailView extends JFrame{
 		partVendor = model.getCurrentObject().getVendor();
 		partQuantity = model.getCurrentObject().getQuantity();
 		partUnit = model.getCurrentObject().getUnit();
-		num = new JLabel("Part #: " + partNumber);/*creates JLabels displaying values*/
-		name = new JLabel("Part name: " + partName);
-		ven = new JLabel("Vendor: " + partVendor);
-		q = new JLabel("Quantity: " + partQuantity + " " + partUnit);
+		extNumber = model.getCurrentObject().getExt();
+		partId = model.getCurrentObject().getId();
+		idLabel = new JLabel("Part ID: " + partId);/*creates JLabels displaying values*/
+		numLabel = new JLabel("Part #: " + partNumber);
+		nameLabel = new JLabel("Part name: " + partName);
+		venLabel = new JLabel("Vendor: " + partVendor);
+		qLabel = new JLabel("Quantity: " + partQuantity + " " + partUnit);
+		extLabel = new JLabel("Ext. part #: " + extNumber);
 		
 		buttonPanel = new JPanel();/*creates and adds button panel to JFrame*/
 		buttonPanel.add(editButton);
@@ -45,10 +54,12 @@ public class partDetailView extends JFrame{
 		this.add(buttonPanel, BorderLayout.SOUTH);
 		
 		detailPanel = new JPanel();/*creates and adds detailPanel to JFrame*/
-		detailPanel.add(num);
-		detailPanel.add(name);
-		detailPanel.add(ven);
-		detailPanel.add(q);
+		detailPanel.add(idLabel);
+		detailPanel.add(numLabel);
+		detailPanel.add(extLabel);
+		detailPanel.add(nameLabel);
+		detailPanel.add(venLabel);
+		detailPanel.add(qLabel);
 		this.add(detailPanel);
 	}
 

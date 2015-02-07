@@ -17,6 +17,7 @@ public class editPartView extends JFrame{
 	private JButton saveButton = new JButton("Save");
 	private JButton cancelButton = new JButton("Cancel");
 	private String partName;
+	private String extNum;
 	private String partNumber;
 	private String partVendor;
 	private int partQuantity;
@@ -25,16 +26,18 @@ public class editPartView extends JFrame{
 	final String[] choices = { "Unknown", "pieces", 
 			  "feet" , "inches" , "units" , "sets" };
 	private JPanel panel = new JPanel();
-	private JLabel num = new JLabel("Part #: ");
-	private JLabel name = new JLabel("Part Name: ");
-	private JLabel ven = new JLabel("Vendor: ");
-	private JLabel q = new JLabel("Quantity: ");
-	private JTextField PartNum = new JTextField(20);
-	private JTextField PartName = new JTextField(20);
-	private JTextField Vendor = new JTextField(20);
-	private JTextField Quantity = new JTextField(10);
+	private JLabel extLabel = new JLabel("Part #: ");
+	private JLabel numLabel = new JLabel("Ext. Part #: ");
+	private JLabel nameLabel = new JLabel("Part Name: ");
+	private JLabel venLabel = new JLabel("Vendor: ");
+	private JLabel qLabel = new JLabel("Quantity: ");
+	private JTextField numText = new JTextField(20);
+	private JTextField extText = new JTextField(20);
+	private JTextField nameText = new JTextField(20);
+	private JTextField vText = new JTextField(20);
+	private JTextField qText = new JTextField(20);
 	private JTextField Unit = new JTextField(10);
-	//private JComboBox combo = new JComboBox(choices);
+	
 	
 	public editPartView(inventoryModel model){
 		this.model = model;
@@ -43,21 +46,27 @@ public class editPartView extends JFrame{
 		partVendor = model.getCurrentObject().getVendor();
 		partQuantity = model.getCurrentObject().getQuantity();
 		partUnit = model.getCurrentObject().getUnit();
-		PartNum.setText(partNumber);/*fills JTextFields with currentObject's values*/
-		PartName.setText(partName);
-		Vendor.setText(partVendor);
-		Quantity.setText(Integer.toString(partQuantity));
+		extNum = model.getCurrentObject().getExt();
+		numText.setText(partNumber);/*fills JTextFields with currentObject's values*/
+		nameText.setText(partName);
+		vText.setText(partVendor);
+		qText.setText(Integer.toString(partQuantity));
+		extText.setText(extNum);
 		Unit.setText(partUnit);
 		
-		panel.add(num);/*add labels and text fields to panel*/
-		panel.add(PartNum);
-		panel.add(name);
-		panel.add(PartName);
-		panel.add(ven);
-		panel.add(Vendor);
-		panel.add(q);
-		panel.add(Quantity);
+		panel.add(numLabel);/*add labels and text fields to panel*/
+		panel.add(numText);
+		panel.add(extLabel);
+		panel.add(extText);
+		panel.add(nameLabel);
+		panel.add(nameText);
+		panel.add(venLabel);
+		panel.add(vText);
+		panel.add(qLabel);
+		panel.add(qText);
 		panel.add(Unit);
+		
+		
 		editPanel.add(saveButton);/*adds button to editPanel*/
 		editPanel.add(cancelButton);
 		this.add(panel,BorderLayout.CENTER);/*adds panels to JFrame*/
@@ -78,19 +87,23 @@ public class editPartView extends JFrame{
 	 * gets text from text fields
 	 */
 	public String getNameText(){
-		return PartName.getText();
+		return nameText.getText();
 	}
 	
 	public String getNumText(){
-		return PartNum.getText();
+		return numText.getText();
+	}
+	
+	public String getExtText(){
+		return extText.getText();
 	}
 	
 	public String getVText(){
-		return Vendor.getText();
+		return vText.getText();
 	}
 	
 	public String getQText(){
-		return Quantity.getText();
+		return qText.getText();
 	}
 	
 	public String getCurrName(){

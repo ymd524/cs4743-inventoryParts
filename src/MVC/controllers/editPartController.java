@@ -33,13 +33,14 @@ public class editPartController implements ActionListener {
 			String ven = view.getVText();
 			int Q = Integer.parseInt(view.getQText());
 			String unit = view.getUnitText();
-			
+			String ext = view.getExtText();
+			int q = Integer.parseInt(view.getQText());
 			checkNull(name, num);
-			checkQuantity(Q);
+			checkQuantity(q);
 			checkName(name);
 			checkUnit(unit);
 			if(model.getFlag() == 0){
-				model.updatePart(num, name, ven, Q, unit);//values updates if necessary
+				model.updatePart(num, name, ven, q, ext, unit);//values updates if necessary
 				int index = model.getObjectIndex();
 				model.changeNameInArray(index, name);
 				model.resetList();//restarts the showPartsView for updated list values

@@ -13,32 +13,35 @@ public class addPartsView extends JFrame{
 	private inventoryModel model;
 	private JPanel addPanel = new JPanel();
 	private JPanel buttonPanel = new JPanel();
-	private JLabel num = new JLabel("Part #: ");
-	private JLabel name = new JLabel("     Part Name: ");
-	private JLabel ven = new JLabel("  Vendor: ");
-	private JLabel q = new JLabel("   Quantity: ");
-	private JTextField PartNum = new JTextField(20);
-	private JTextField PartName = new JTextField(20);
-	private JTextField Vendor = new JTextField(20);
-	private JTextField Quantity = new JTextField(10);
-    private JButton addButton = new JButton("Add Part");
+	private JLabel numLabel = new JLabel("Part #: ");
+	private JLabel nameLabel = new JLabel("     Part Name: ");
+	private JLabel venLabel = new JLabel("  Vendor: ");
+	private JLabel qLabel = new JLabel("   Quantity: ");
+	private JLabel extLabel = new JLabel("     Ext. Part #: ");
+	private JTextField numText = new JTextField(20);
+	private JTextField nameText = new JTextField(20);
+	private JTextField venText = new JTextField(20);
+	private JTextField qText = new JTextField(20);
+	private JTextField extText = new JTextField(20);
+	private JButton addButton = new JButton("Add Part");
 	private JButton cancelButton = new JButton("Cancel");
 	private JComboBox combo = new JComboBox(choices);
 	
 	public addPartsView(inventoryModel model){
 		this.model = model;
 		
-		addPanel.add(num);/*adds labels and text fields to addPanel*/
-		addPanel.add(PartNum);
-		addPanel.add(name);
-		addPanel.add(PartName);
-		addPanel.add(ven);
-		addPanel.add(Vendor);
-		addPanel.add(q);
-		addPanel.add(Quantity);
-		
+
+		addPanel.add(numLabel);/*adds labels and text fields to addPanel*/
+		addPanel.add(numText);
+		addPanel.add(extLabel);
+		addPanel.add(extText);
+		addPanel.add(nameLabel);
+		addPanel.add(nameText);
+		addPanel.add(venLabel);
+		addPanel.add(venText);
+		addPanel.add(qLabel);
+		addPanel.add(qText);
 		addPanel.add(combo);
-		
 		buttonPanel.add(addButton);/*adds buttons to buttonPanel*/
 		buttonPanel.add(cancelButton);
 		this.add(buttonPanel, BorderLayout.SOUTH);/*adds buttonPanel and addPanel to JFrame*/
@@ -59,19 +62,23 @@ public class addPartsView extends JFrame{
 	 */
 	
 	public String getNum(){
-		return PartNum.getText();
+		return numText.getText();
+	}
+	
+	public String getExtNum(){
+		return extText.getText();
 	}
 	
 	public String getName(){
-		return PartName.getText();
+		return nameText.getText();
 	}
 	
 	public String getVendor(){
-		return Vendor.getText();
+		return venText.getText();
 	}
 	
 	public int getQuantity(){
-			return Integer.parseInt(Quantity.getText());
+			return Integer.parseInt(qText.getText());
 	}
 	public String getUnitQ() {
 		String str = (String)combo.getSelectedItem();
