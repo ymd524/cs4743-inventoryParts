@@ -27,23 +27,24 @@ public class editPartController implements ActionListener {
 		String command = e.getActionCommand();//gets values from editPanel in editPartView
 		if (command.equals("Cancel")) {
 			view.closeWindow();
-		}else if (command.equals("Save")){
+		} else if (command.equals("Save")){
 			String name = view.getNameText();/*gets values submitted for currentObject update*/
 			String num = view.getNumText();
 			String ven = view.getVText();
 			int Q = Integer.parseInt(view.getQText());
+			String unit = view.getUnitText();
 			
 			checkNull(name, num);
 			checkQuantity(Q);
 			checkName(name);
-			
+			checkUnit(unit);
 			if(model.getFlag() == 0){
-				model.updatePart(num, name, ven, Q);//values updates if necessary
+				model.updatePart(num, name, ven, Q, unit);//values updates if necessary
 				int index = model.getObjectIndex();
 				model.changeNameInArray(index, name);
 				model.resetList();//restarts the showPartsView for updated list values
 				view.closeWindow();//close editPartView
-			}else if(model.getFlag() == 1){
+			} else if(model.getFlag() == 1){
 				errorView = new errorView(model);//creates new errorView
 				errorView.setSize(400, 300);/* starts new errorView*/
 				errorView.setVisible(true);
@@ -61,7 +62,6 @@ public class editPartController implements ActionListener {
 		names = namesArray.toArray(names);//assigns values from arrayList to array
 		
 		for(int i=0; i<names.length;i++){
-			
 			if(names[i].equals(name) && !name.equals(currName)){
 				model.setFlag(1);
 				error = "Part name is not unique";
@@ -105,5 +105,23 @@ public class editPartController implements ActionListener {
 	
 	private void setName(){
 		currName = view.getCurrName();
+	}
+	
+	private void checkUnit(String unit) {
+		String nstr = "Unknown";
+		String nullString = null;
+		String emptyString = new String();
+		
+		if (unit.equalsIgnoreCase(nstr)) {
+			model.setFlag(1);
+			error = "Unit of Quantity cannot be Unknown";
+			model.setError(error);
+		}
+		if (unit.equals(nullString) || unit.equals(emptyString)) {
+			model.setFlag(1);
+			error = "Unit of Quantity is required";
+			model.setError(error);
+		}
+		
 	}
 }

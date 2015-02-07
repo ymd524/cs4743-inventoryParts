@@ -6,7 +6,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
-
 import MVC.models.inventoryModel;
 import MVC.views.addPartsView;
 import MVC.views.errorView;
@@ -37,13 +36,13 @@ public class addPartController implements ActionListener{
 			String num = view.getNum();
 			String vendor = view.getVendor();
 			int q = view.getQuantity();
-			
+			String unit = view.getUnitQ();
 			checkNull(name, num);
 			checkQuantity(q);
 			checkName(name);
-			
+			checkUnit(unit);
 			if(model.getFlag() == 0){
-				model.addPart(num, name, vendor, q);//adds new object to ArrayList of objects and name to names ArrayList
+				model.addPart(num, name, vendor, q, unit);//adds new object to ArrayList of objects and name to names ArrayList
 				model.resetList();//restarts showPartsView for updated list values
 				view.closeWindow();//closes addPartView
 			}else if (model.getFlag() == 1){
@@ -102,5 +101,23 @@ public class addPartController implements ActionListener{
 			error = "Part number is required";
 			model.setError(error);
 		}
+	}
+
+	private void checkUnit(String unit) {
+		String nstr = "Unknown";
+		String nullString = null;
+		String emptyString = new String();
+		
+		if (unit.equalsIgnoreCase(nstr)) {
+			model.setFlag(1);
+			error = "Unit of Quantity cannot be Unknown";
+			model.setError(error);
+		}
+		if (unit.equals(nullString) || unit.equals(emptyString)) {
+			model.setFlag(1);
+			error = "Unit of Quantity is required";
+			model.setError(error);
+		}
+		
 	}
 }

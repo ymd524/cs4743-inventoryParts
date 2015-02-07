@@ -2,9 +2,7 @@ package MVC.models;
 
 import java.awt.List;
 import java.util.ArrayList;
-
 import javax.swing.JFrame;
-
 import MVC.controllers.menuController;
 import MVC.controllers.showPartsController;
 import MVC.views.showPartsView;
@@ -42,20 +40,25 @@ public class inventoryModel {
 	/*
 	 * adds new instance of addPartModel to arraylist and the name value to arraylist of names
 	 */
+<<<<<<< HEAD
 	public void addPart(String num, String name, String vendor, int quantity){
 		newPart = new addPartModel(num, name, vendor, quantity, id);
+=======
+	public void addPart(String num, String name, String vendor, int quantity, String unit){
+		newPart = new addPartModel(num, name, vendor, quantity, unit);
+>>>>>>> origin/dev_u2
 		nameArray.add(name);
 		partsList.add(newPart);	
+		
 		id++;
 	}		
 	
 	/*
 	 * if any of the fields dont match the current value, they are updated in the addPartModel
 	 */
-	public void updatePart(String num, String name, String vendor, int quantity){
+	public void updatePart(String num, String name, String vendor, int quantity, String unit){
 		if(!currentObject.getName().equals(name)){
-			currentObject.setNewName(name);
-			
+			currentObject.setNewName(name);			
 		}
 		
 		if(!currentObject.getNum().equals(num)){
@@ -68,6 +71,10 @@ public class inventoryModel {
 		
 		if(currentObject.getQuantity() != quantity){
 			currentObject.setNewQ(quantity);
+		}
+		
+		if(currentObject.getUnit() != unit){
+			currentObject.setUnit(unit);
 		}
 	}
 	
@@ -156,6 +163,3 @@ public class inventoryModel {
 	}
 	
 }
-
-
-

@@ -3,14 +3,13 @@ package MVC.views;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.*;
-
 import MVC.controllers.addPartController;
 import MVC.models.inventoryModel;
 
 public class addPartsView extends JFrame{
-	
+	final String[] choices = { "Unknown", "pieces", 
+	  "feet" , "inches" , "units" , "sets" };
 	private inventoryModel model;
 	private JPanel addPanel = new JPanel();
 	private JPanel buttonPanel = new JPanel();
@@ -21,10 +20,11 @@ public class addPartsView extends JFrame{
 	private JTextField PartNum = new JTextField(20);
 	private JTextField PartName = new JTextField(20);
 	private JTextField Vendor = new JTextField(20);
-	private JTextField Quantity = new JTextField(20);
-	private JButton addButton = new JButton("Add Part");
+	private JTextField Quantity = new JTextField(10);
+    private JButton addButton = new JButton("Add Part");
 	private JButton cancelButton = new JButton("Cancel");
-
+	private JComboBox combo = new JComboBox(choices);
+	
 	public addPartsView(inventoryModel model){
 		this.model = model;
 		
@@ -36,6 +36,9 @@ public class addPartsView extends JFrame{
 		addPanel.add(Vendor);
 		addPanel.add(q);
 		addPanel.add(Quantity);
+		
+		addPanel.add(combo);
+		
 		buttonPanel.add(addButton);/*adds buttons to buttonPanel*/
 		buttonPanel.add(cancelButton);
 		this.add(buttonPanel, BorderLayout.SOUTH);/*adds buttonPanel and addPanel to JFrame*/
@@ -69,5 +72,9 @@ public class addPartsView extends JFrame{
 	
 	public int getQuantity(){
 			return Integer.parseInt(Quantity.getText());
+	}
+	public String getUnitQ() {
+		String str = (String)combo.getSelectedItem();
+		return str;
 	}
 }

@@ -2,13 +2,11 @@ package MVC.views;
 
 import java.awt.BorderLayout;
 import java.util.ArrayList;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
 import MVC.controllers.partDetailController;
 import MVC.models.inventoryModel;
 
@@ -26,7 +24,7 @@ public class partDetailView extends JFrame{
 	private String partNumber;
 	private String  partVendor;
 	private int partQuantity;
-	
+	private String partUnit;
 
 	public partDetailView(inventoryModel model){
 		super("Part Detail");
@@ -35,10 +33,11 @@ public class partDetailView extends JFrame{
 		partNumber = model.getCurrentObject().getNum();
 		partVendor = model.getCurrentObject().getVendor();
 		partQuantity = model.getCurrentObject().getQuantity();
+		partUnit = model.getCurrentObject().getUnit();
 		num = new JLabel("Part #: " + partNumber);/*creates JLabels displaying values*/
 		name = new JLabel("Part name: " + partName);
 		ven = new JLabel("Vendor: " + partVendor);
-		q = new JLabel("Quantity: " + partQuantity);
+		q = new JLabel("Quantity: " + partQuantity + " " + partUnit);
 		
 		buttonPanel = new JPanel();/*creates and adds button panel to JFrame*/
 		buttonPanel.add(editButton);

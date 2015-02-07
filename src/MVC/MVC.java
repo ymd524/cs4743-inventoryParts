@@ -9,6 +9,10 @@ import MVC.controllers.menuController;
 import MVC.controllers.showPartsController;
 import MVC.models.inventoryModel;
 import MVC.views.showPartsView;
+/*   
+ * Assignment 2 by Richard & Zach
+ * 
+ * */
 
 public class MVC {
 	

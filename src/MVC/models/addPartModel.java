@@ -8,14 +8,27 @@ public class addPartModel {
 	private String name;
 	private String vendor;
 	private int quantity;
+<<<<<<< HEAD
+	
 	private int id;
 	
 	public addPartModel(String num, String name, String vendor, int quantity, int id){
+=======
+	
+
+	private String unit;
+	public addPartModel(String num, String name, String vendor, int quantity, String unit){
+>>>>>>> origin/dev_u2
 		this.num = num;
 		this.name = name;
 		this.vendor = vendor;
 		this.quantity = quantity;
+<<<<<<< HEAD
+		
 		this.id = id;
+=======
+		this.unit = unit;
+>>>>>>> origin/dev_u2
 	}
 	
 	/*
@@ -37,6 +50,10 @@ public class addPartModel {
 		this.quantity = s;
 	}
 	
+	public void setUnit(String unit) {
+		this.unit = unit;
+	}
+
 	/*
 	 * getters
 	 */
@@ -56,7 +73,15 @@ public class addPartModel {
 		return this.quantity;
 	}
 	
+<<<<<<< HEAD
 	public int getId(){
 		return this.id;
+=======
+	
+
+	
+	public String getUnit() {
+		return unit;
+>>>>>>> origin/dev_u2
 	}
 }
