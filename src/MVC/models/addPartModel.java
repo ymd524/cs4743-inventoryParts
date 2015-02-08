@@ -1,34 +1,28 @@
 package MVC.models;
 
-import java.util.ArrayList;
-
 public class addPartModel {
 	
 	private String num;
 	private String name;
 	private String vendor;
-	private int quantity;
-<<<<<<< HEAD
-	
+	private int quantity;	
 	private int id;
-	
-	public addPartModel(String num, String name, String vendor, int quantity, int id){
-=======
+	private String ext;
+	private String unit;
+	private String location;
 	
 
-	private String unit;
-	public addPartModel(String num, String name, String vendor, int quantity, String unit){
->>>>>>> origin/dev_u2
+	public addPartModel(String num, String name, String vendor, int quantity, 
+			int id, String ext, String unit, String location){
+
 		this.num = num;
 		this.name = name;
 		this.vendor = vendor;
 		this.quantity = quantity;
-<<<<<<< HEAD
-		
 		this.id = id;
-=======
 		this.unit = unit;
->>>>>>> origin/dev_u2
+		this.ext = ext;
+		this.location = location;
 	}
 	
 	/*
@@ -41,7 +35,11 @@ public class addPartModel {
 	public void setNewNum(String s){
 		this.num = s;
 	}
-	
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
 	public void setNewV(String s){
 		this.vendor = s;
 	}
@@ -53,6 +51,11 @@ public class addPartModel {
 	public void setUnit(String unit) {
 		this.unit = unit;
 	}
+
+	public void setNewExt(String s){
+		this.ext = s;
+	}
+	
 
 	/*
 	 * getters
@@ -73,15 +76,19 @@ public class addPartModel {
 		return this.quantity;
 	}
 	
-<<<<<<< HEAD
 	public int getId(){
 		return this.id;
-=======
-	
-
+	}
 	
 	public String getUnit() {
 		return unit;
->>>>>>> origin/dev_u2
 	}
+	
+	public String getExt(){
+		return this.ext;
+	}
+	public String getLocation() {
+		return location;
+	}
+
 }

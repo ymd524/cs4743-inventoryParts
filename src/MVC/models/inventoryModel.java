@@ -40,23 +40,22 @@ public class inventoryModel {
 	/*
 	 * adds new instance of addPartModel to arraylist and the name value to arraylist of names
 	 */
-<<<<<<< HEAD
-	public void addPart(String num, String name, String vendor, int quantity){
-		newPart = new addPartModel(num, name, vendor, quantity, id);
-=======
-	public void addPart(String num, String name, String vendor, int quantity, String unit){
-		newPart = new addPartModel(num, name, vendor, quantity, unit);
->>>>>>> origin/dev_u2
+
+	public void addPart(String num, String name, String vendor, int quantity, 
+			String ext, String unit, String location){
+		newPart = new addPartModel(num, name, vendor, quantity, id, ext, unit, location);
 		nameArray.add(name);
 		partsList.add(newPart);	
-		
 		id++;
 	}		
 	
 	/*
 	 * if any of the fields dont match the current value, they are updated in the addPartModel
 	 */
-	public void updatePart(String num, String name, String vendor, int quantity, String unit){
+
+	public void updatePart(String num, String name, String vendor, 
+			int quantity, String ext, String unit, String location){
+
 		if(!currentObject.getName().equals(name)){
 			currentObject.setNewName(name);			
 		}
@@ -75,6 +74,14 @@ public class inventoryModel {
 		
 		if(currentObject.getUnit() != unit){
 			currentObject.setUnit(unit);
+		}
+
+		if(!currentObject.getExt().equals(ext)){
+			currentObject.setNewExt(ext);
+		}
+		
+		if(currentObject.getLocation() != location){
+			currentObject.setLocation(location);
 		}
 	}
 	

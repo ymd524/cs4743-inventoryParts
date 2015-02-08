@@ -2,7 +2,6 @@ package MVC.controllers;
 
 import java.awt.event.*;
 import java.util.ArrayList;
-
 import MVC.models.inventoryModel;
 import MVC.views.editPartView;
 import MVC.views.errorView;
@@ -33,13 +32,16 @@ public class editPartController implements ActionListener {
 			String ven = view.getVText();
 			int Q = Integer.parseInt(view.getQText());
 			String unit = view.getUnitText();
-			
+			String ext = view.getExtText();
+			int q = Integer.parseInt(view.getQText());
+			String location = view.getLocText();
 			checkNull(name, num);
-			checkQuantity(Q);
+			checkQuantity(q);
 			checkName(name);
 			checkUnit(unit);
+			checkLoc(location);
 			if(model.getFlag() == 0){
-				model.updatePart(num, name, ven, Q, unit);//values updates if necessary
+				model.updatePart(num, name, ven, q, ext, unit, location);//values updates if necessary
 				int index = model.getObjectIndex();
 				model.changeNameInArray(index, name);
 				model.resetList();//restarts the showPartsView for updated list values
@@ -120,6 +122,23 @@ public class editPartController implements ActionListener {
 		if (unit.equals(nullString) || unit.equals(emptyString)) {
 			model.setFlag(1);
 			error = "Unit of Quantity is required";
+			model.setError(error);
+		}
+		
+	}
+	private void checkLoc(String location) {
+		String nstr = "Unknown";
+		String nullString = null;
+		String emptyString = new String();
+		
+		if (location.equalsIgnoreCase(nstr)) {
+			model.setFlag(1);
+			error = "Part Location cannot be Unknown";
+			model.setError(error);
+		}
+		if (location.equals(nullString) || location.equals(emptyString)) {
+			model.setFlag(1);
+			error = "Part Location is required";
 			model.setError(error);
 		}
 		

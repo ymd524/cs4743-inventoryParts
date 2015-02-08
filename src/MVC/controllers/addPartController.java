@@ -35,14 +35,21 @@ public class addPartController implements ActionListener{
 			String name = view.getName();/*sets values from addPartView's text fields*/
 			String num = view.getNum();
 			String vendor = view.getVendor();
+			String extNum = view.getExtNum();
 			int q = view.getQuantity();
 			String unit = view.getUnitQ();
-			checkNull(name, num);
+			String location = view.getLoc();
+			//checkNull(name, num);
+
+			
+			
+			checkRequiredFields(name, num);
 			checkQuantity(q);
 			checkName(name);
 			checkUnit(unit);
+			checkLoc(location);
 			if(model.getFlag() == 0){
-				model.addPart(num, name, vendor, q, unit);//adds new object to ArrayList of objects and name to names ArrayList
+				model.addPart(num, name, vendor, q, extNum, unit, location);//adds new object to ArrayList of objects and name to names ArrayList
 				model.resetList();//restarts showPartsView for updated list values
 				view.closeWindow();//closes addPartView
 			}else if (model.getFlag() == 1){
@@ -82,12 +89,13 @@ public class addPartController implements ActionListener{
 			model.setError(error);
 		}
 	}
+	
 
 	/*
 	 * sets flag to 1 if name or num are empty or null, 
 	 * adds error desc to errorArray
 	 */
-	private void checkNull(String name, String num) {
+	private void checkRequiredFields(String name, String num) {
 		String nullString = null;
 		String emptyString = new String();
 		
@@ -116,6 +124,24 @@ public class addPartController implements ActionListener{
 		if (unit.equals(nullString) || unit.equals(emptyString)) {
 			model.setFlag(1);
 			error = "Unit of Quantity is required";
+			model.setError(error);
+		}
+		
+	}
+	
+	private void checkLoc(String location) {
+		String nstr = "Unknown";
+		String nullString = null;
+		String emptyString = new String();
+		
+		if (location.equalsIgnoreCase(nstr)) {
+			model.setFlag(1);
+			error = "Part Location cannot be Unknown";
+			model.setError(error);
+		}
+		if (location.equals(nullString) || location.equals(emptyString)) {
+			model.setFlag(1);
+			error = "Part Location is required";
 			model.setError(error);
 		}
 		
