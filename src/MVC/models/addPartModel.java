@@ -1,20 +1,19 @@
 package MVC.models;
 
-import java.util.ArrayList;
-
 public class addPartModel {
 	
 	private String num;
 	private String name;
 	private String vendor;
 	private int quantity;
-	
 	private int id;
 	private String ext;
 	private String unit;
+	private String location;
 	
 
-	public addPartModel(String num, String name, String vendor, int quantity, int id, String ext, String unit){
+	public addPartModel(String num, String name, String vendor, int quantity, 
+			int id, String ext, String unit, String location){
 
 		this.num = num;
 		this.name = name;
@@ -23,6 +22,7 @@ public class addPartModel {
 		this.id = id;
 		this.unit = unit;
 		this.ext = ext;
+		this.location = location;
 	}
 	
 	/*
@@ -35,7 +35,11 @@ public class addPartModel {
 	public void setNewNum(String s){
 		this.num = s;
 	}
-	
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
 	public void setNewV(String s){
 		this.vendor = s;
 	}
@@ -76,8 +80,6 @@ public class addPartModel {
 		return this.id;
 	}
 	
-
-	
 	public String getUnit() {
 		return unit;
 	}
@@ -85,4 +87,8 @@ public class addPartModel {
 	public String getExt(){
 		return this.ext;
 	}
+	public String getLocation() {
+		return location;
+	}
+
 }

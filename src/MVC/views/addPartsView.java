@@ -10,6 +10,8 @@ import MVC.models.inventoryModel;
 public class addPartsView extends JFrame{
 	final String[] choices = { "Unknown", "pieces", 
 	  "feet" , "inches" , "units" , "sets" };
+	final String[] places = { "Facility 1 Warehouse 1", "Facility 1 Warehouse 2", 
+			  "Facility 1" , "Facility 2" , "Area 51" , "Unknown" };
 	private inventoryModel model;
 	private JPanel addPanel = new JPanel();
 	private JPanel buttonPanel = new JPanel();
@@ -18,6 +20,7 @@ public class addPartsView extends JFrame{
 	private JLabel venLabel = new JLabel("  Vendor: ");
 	private JLabel qLabel = new JLabel("   Quantity: ");
 	private JLabel extLabel = new JLabel("     Ext. Part #: ");
+	private JLabel locLabel = new JLabel("     Location: ");
 	private JTextField numText = new JTextField(20);
 	private JTextField nameText = new JTextField(20);
 	private JTextField venText = new JTextField(20);
@@ -26,6 +29,7 @@ public class addPartsView extends JFrame{
 	private JButton addButton = new JButton("Add Part");
 	private JButton cancelButton = new JButton("Cancel");
 	private JComboBox combo = new JComboBox(choices);
+	private JComboBox lcombo = new JComboBox(places);
 	
 	public addPartsView(inventoryModel model){
 		this.model = model;
@@ -42,6 +46,8 @@ public class addPartsView extends JFrame{
 		addPanel.add(qLabel);
 		addPanel.add(qText);
 		addPanel.add(combo);
+		addPanel.add(locLabel);
+		addPanel.add(lcombo);
 		buttonPanel.add(addButton);/*adds buttons to buttonPanel*/
 		buttonPanel.add(cancelButton);
 		this.add(buttonPanel, BorderLayout.SOUTH);/*adds buttonPanel and addPanel to JFrame*/
@@ -83,5 +89,9 @@ public class addPartsView extends JFrame{
 	public String getUnitQ() {
 		String str = (String)combo.getSelectedItem();
 		return str;
+	}
+	public String getLoc() {
+		String lstr = (String)lcombo.getSelectedItem();
+		return lstr;
 	}
 }

@@ -20,6 +20,7 @@ public class partDetailView extends JFrame{
 	private JLabel venLabel = new JLabel("Vendor: ");
 	private JLabel qLabel = new JLabel("Quantity: ");
 	private JLabel extLabel = new JLabel("Ext. Part #: ");
+	private JLabel locLabel = new JLabel("Location: ");
 	private JButton editButton = new JButton("Edit Part");
 	private JButton deleteButton = new JButton("Delete Part");
 	private String partName;
@@ -29,6 +30,8 @@ public class partDetailView extends JFrame{
 	private int partQuantity;
 	private String partUnit;
 	private int partId;
+	private String partloc;
+
 
 
 	public partDetailView(inventoryModel model){
@@ -41,13 +44,15 @@ public class partDetailView extends JFrame{
 		partUnit = model.getCurrentObject().getUnit();
 		extNumber = model.getCurrentObject().getExt();
 		partId = model.getCurrentObject().getId();
+		partloc = model.getCurrentObject().getLocation();
 		idLabel = new JLabel("Part ID: " + partId);/*creates JLabels displaying values*/
 		numLabel = new JLabel("Part #: " + partNumber);
 		nameLabel = new JLabel("Part name: " + partName);
 		venLabel = new JLabel("Vendor: " + partVendor);
 		qLabel = new JLabel("Quantity: " + partQuantity + " " + partUnit);
 		extLabel = new JLabel("Ext. part #: " + extNumber);
-		
+		locLabel = new JLabel("Location: " + partloc);
+
 		buttonPanel = new JPanel();/*creates and adds button panel to JFrame*/
 		buttonPanel.add(editButton);
 		buttonPanel.add(deleteButton);
@@ -60,6 +65,7 @@ public class partDetailView extends JFrame{
 		detailPanel.add(nameLabel);
 		detailPanel.add(venLabel);
 		detailPanel.add(qLabel);
+		detailPanel.add(locLabel);
 		this.add(detailPanel);
 	}
 

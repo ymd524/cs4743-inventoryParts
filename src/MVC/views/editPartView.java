@@ -23,21 +23,25 @@ public class editPartView extends JFrame{
 	private int partQuantity;
 	private String partUnit;
 	private int index;
+	private String partloc;
 	final String[] choices = { "Unknown", "pieces", 
 			  "feet" , "inches" , "units" , "sets" };
+	final String[] places = { "Facility 1 Warehouse 1", "Facility 1 Warehouse 2", 
+			  "Facility 1" , "Facility 2" , "Area 51" , "Unknown" };
 	private JPanel panel = new JPanel();
 	private JLabel extLabel = new JLabel("Part #: ");
 	private JLabel numLabel = new JLabel("Ext. Part #: ");
 	private JLabel nameLabel = new JLabel("Part Name: ");
 	private JLabel venLabel = new JLabel("Vendor: ");
 	private JLabel qLabel = new JLabel("Quantity: ");
+	private JLabel locLabel = new JLabel("Location: ");
 	private JTextField numText = new JTextField(20);
 	private JTextField extText = new JTextField(20);
 	private JTextField nameText = new JTextField(20);
 	private JTextField vText = new JTextField(20);
 	private JTextField qText = new JTextField(20);
 	private JTextField Unit = new JTextField(10);
-	
+	private JTextField loc = new JTextField(10);
 	
 	public editPartView(inventoryModel model){
 		this.model = model;
@@ -47,12 +51,15 @@ public class editPartView extends JFrame{
 		partQuantity = model.getCurrentObject().getQuantity();
 		partUnit = model.getCurrentObject().getUnit();
 		extNum = model.getCurrentObject().getExt();
+		partloc = model.getCurrentObject().getLocation();
+
 		numText.setText(partNumber);/*fills JTextFields with currentObject's values*/
 		nameText.setText(partName);
 		vText.setText(partVendor);
 		qText.setText(Integer.toString(partQuantity));
 		extText.setText(extNum);
 		Unit.setText(partUnit);
+		loc.setText(partloc);
 		
 		panel.add(numLabel);/*add labels and text fields to panel*/
 		panel.add(numText);
@@ -65,7 +72,8 @@ public class editPartView extends JFrame{
 		panel.add(qLabel);
 		panel.add(qText);
 		panel.add(Unit);
-		
+		panel.add(locLabel);
+		panel.add(loc);
 		
 		editPanel.add(saveButton);/*adds button to editPanel*/
 		editPanel.add(cancelButton);
@@ -111,5 +119,8 @@ public class editPartView extends JFrame{
 	}
 	public String getUnitText() {
 		return Unit.getText();
+	}
+	public String getLocText() {
+		return loc.getText();
 	}
 }
