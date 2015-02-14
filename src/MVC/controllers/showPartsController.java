@@ -1,6 +1,7 @@
 package MVC.controllers;
 
 import java.awt.event.KeyEvent;
+import java.sql.ResultSet;
 
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -16,6 +17,7 @@ public class showPartsController implements ListSelectionListener {
 	private inventoryModel model;
 	private addPartModel addModel;
 	private partDetailView detailView;
+	private ResultSet results;
 	
 	public showPartsController(showPartsView view, inventoryModel model){
 		this.view = view;
@@ -25,10 +27,8 @@ public class showPartsController implements ListSelectionListener {
 	@Override
 	public void valueChanged(ListSelectionEvent e) {
 		String command = view.getSelectedValue();//gets and assigns the selected value from JList to command
-		int index = view.getArrayIndex(command);
-		model.setIndex(index);
-		model.getObjectByInt(index);//sets currentObject in inventoryModel by searching for object with matching name
-		addModel = model.getCurrentObject();//assigns the currentObject to addModel
+		model.setCurrentPartByName(command);
+
 		detailView = new partDetailView(model);//creates partDetailView
 		partDetailController detailController = new partDetailController(model, detailView);//creates partDetailController
 		detailView.registerListeners(detailController);//registers partDetailController as listener

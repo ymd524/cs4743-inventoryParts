@@ -3,6 +3,7 @@ package MVC.views;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.*;
@@ -31,6 +32,7 @@ public class showPartsView extends JFrame{
 		controller = new showPartsController(this, this.model);
 		menuController = new menuController(this.model, this);
 		model.setShowView(this);//sets current instance of view in inventoryModel
+		model.getPartsList();
 		addList();//creates and adds JList to jframe with current arrayList values
 	}
 	
