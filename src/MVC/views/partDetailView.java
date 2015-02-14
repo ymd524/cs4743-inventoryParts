@@ -1,12 +1,16 @@
 package MVC.views;
 
 import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.sql.SQLException;
 import java.util.ArrayList;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
 import MVC.controllers.partDetailController;
 import MVC.models.inventoryModel;
 
@@ -20,6 +24,7 @@ public class partDetailView extends JFrame{
 	private JLabel venLabel = new JLabel("Vendor: ");
 	private JLabel qLabel = new JLabel("Quantity: ");
 	private JLabel extLabel = new JLabel("Ext. Part #: ");
+	private JLabel unitLabel = new JLabel();
 	private JLabel locLabel = new JLabel("Location: ");
 	private JButton editButton = new JButton("Edit Part");
 	private JButton deleteButton = new JButton("Delete Part");
@@ -34,39 +39,34 @@ public class partDetailView extends JFrame{
 
 
 
-	public partDetailView(inventoryModel model){
+	public partDetailView(inventoryModel model) {
 		super("Part Detail");
 		this.model = model;
-		partName = model.getCurrentObject().getName();/*gets and assigns values of currentObject*/
-		partNumber = model.getCurrentObject().getNum();
-		partVendor = model.getCurrentObject().getVendor();
-		partQuantity = model.getCurrentObject().getQuantity();
-		partUnit = model.getCurrentObject().getUnit();
-		extNumber = model.getCurrentObject().getExt();
-		partId = model.getCurrentObject().getId();
-		partloc = model.getCurrentObject().getLocation();
+		
+		GridLayout grid = new GridLayout(4,7);
+	
+		partNumber = model.getCurrentPartNumber();/*gets and assigns values of currentObject*/
+		partName = model.getCurrentPartName();
+		partVendor = model.getCurrentPartVendor();
+		partUnit = model.getCurrentPartUnit();
+		extNumber = model.getCurrentPartExt();
+		partId = model.getCurrentPartId();
 		idLabel = new JLabel("Part ID: " + partId);/*creates JLabels displaying values*/
 		numLabel = new JLabel("Part #: " + partNumber);
 		nameLabel = new JLabel("Part name: " + partName);
 		venLabel = new JLabel("Vendor: " + partVendor);
-		qLabel = new JLabel("Quantity: " + partQuantity + " " + partUnit);
 		extLabel = new JLabel("Ext. part #: " + extNumber);
-		locLabel = new JLabel("Location: " + partloc);
+		unitLabel = new JLabel("Unit: " + partUnit);
 
-		buttonPanel = new JPanel();/*creates and adds button panel to JFrame*/
-		buttonPanel.add(editButton);
-		buttonPanel.add(deleteButton);
-		this.add(buttonPanel, BorderLayout.SOUTH);
-		
-		detailPanel = new JPanel();/*creates and adds detailPanel to JFrame*/
-		detailPanel.add(idLabel);
-		detailPanel.add(numLabel);
-		detailPanel.add(extLabel);
-		detailPanel.add(nameLabel);
-		detailPanel.add(venLabel);
-		detailPanel.add(qLabel);
-		detailPanel.add(locLabel);
-		this.add(detailPanel);
+		this.setLayout(grid);
+		this.add(idLabel);/*creates and adds buttons and labels to JFrame*/
+		this.add(numLabel);
+		this.add(extLabel);
+		this.add(unitLabel);
+		this.add(nameLabel);
+		this.add(venLabel);
+		this.add(editButton);
+		this.add(deleteButton);
 	}
 
 	//closes part detail view

@@ -36,17 +36,21 @@ public class addPartController implements ActionListener{
 			String num = view.getNum();
 			String vendor = view.getVendor();
 			String extNum = view.getExtNum();
-			int q = view.getQuantity();
+			//int q = view.getQuantity();
 			String unit = view.getUnitQ();
-			String location = view.getLoc();
+			//String location = view.getLoc();
 			//checkNull(name, num);
-			checkRequiredFields(name, num);
-			checkQuantity(q);
-			checkName(name);
-			checkUnit(unit);
-			checkLoc(location);
+			model.checkRequiredFields(name, num);
+			model.checkNameLength(name);
+			model.checkNumLength(num);
+			model.checkVendorLength(vendor);
+			model.checkExtLength(extNum);
+			model.checkName(name);
+			model.checkUnit(unit);
+			//checkQuantity(q);
+			//checkLoc(location);
 			if(model.getFlag() == 0){
-				model.addPart(num, name, vendor, q, extNum, unit, location);//adds new object to ArrayList of objects and name to names ArrayList
+				model.addPart(num, name, vendor,extNum, unit);//adds new object to ArrayList of objects and name to names ArrayList
 				model.resetList();//restarts showPartsView for updated list values
 				view.closeWindow();//closes addPartView
 			}else if (model.getFlag() == 1){
@@ -57,90 +61,5 @@ public class addPartController implements ActionListener{
 		}
 	}	
 
-	/*
-	 *  gets name array and sets error flag to 1 if there is a match,
-	 *  adds error desc to errorArray in model
-	*/
-	private void checkName(String name) {
-		namesArray=model.getNameArray();//gets ArrayList of names
-		names = new String[namesArray.size()];//creates new String array the size of ArrayList namesArray
-		names = namesArray.toArray(names);//assigns values from arrayList to array
-		
-		for(int i=0; i<names.length;i++){
-			if(names[i].equals(name)){
-				model.setFlag(1);
-				error = "Part name is not unique";
-				model.setError(error);
-				return;
-			}
-		}
-	}
 
-	/*
-	 * sets flag to 1 if q is not > 0, adds error desc to errorArray
-	 */
-	private void checkQuantity(int q) {
-		if(q <= 0){
-			model.setFlag(1);
-			error = "Part quantity must be greater than 0";
-			model.setError(error);
-		}
-	}
-	
-
-	/*
-	 * sets flag to 1 if name or num are empty or null, 
-	 * adds error desc to errorArray
-	 */
-	private void checkRequiredFields(String name, String num) {
-		String nullString = null;
-		String emptyString = new String();
-		
-		if(name.equals(nullString) || name.equals(emptyString)){
-			model.setFlag(1);
-			error = "Part name is required";
-			model.setError(error);
-		}
-		if(num.equals(nullString) || num.equals(emptyString)){
-			model.setFlag(1);
-			error = "Part number is required";
-			model.setError(error);
-		}
-	}
-
-	private void checkUnit(String unit) {
-		String nstr = "Unknown";
-		String nullString = null;
-		String emptyString = new String();
-		
-		if (unit.equalsIgnoreCase(nstr)) {
-			model.setFlag(1);
-			error = "Unit of Quantity cannot be Unknown";
-			model.setError(error);
-		}
-		if (unit.equals(nullString) || unit.equals(emptyString)) {
-			model.setFlag(1);
-			error = "Unit of Quantity is required";
-			model.setError(error);
-		}
-		
-	}
-	
-	private void checkLoc(String location) {
-		String nstr = "Unknown";
-		String nullString = null;
-		String emptyString = new String();
-		
-		if (location.equalsIgnoreCase(nstr)) {
-			model.setFlag(1);
-			error = "Part Location cannot be Unknown";
-			model.setError(error);
-		}
-		if (location.equals(nullString) || location.equals(emptyString)) {
-			model.setFlag(1);
-			error = "Part Location is required";
-			model.setError(error);
-		}
-		
-	}
 }

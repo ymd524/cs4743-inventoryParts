@@ -23,7 +23,7 @@ public class deletePartController implements ActionListener{
 		if (command.equals("Cancel")) {
 			view.closeWindow();//close deletePartView
 		}else if (command.equals("Delete")){
-			model.deletePart();//deletes currentObject from arrayList and corrsponding name in names arrayList
+			model.deletePart(model.getCurrentPartId());//deletes currentObject from arrayList and corrsponding name in names arrayList
 			model.resetList();//restarts the showPartsView for updated list values
 			view.closeWindow();//closes deletePartView
 		}	

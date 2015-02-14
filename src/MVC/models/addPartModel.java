@@ -12,8 +12,7 @@ public class addPartModel {
 	private String location;
 	
 
-	public addPartModel(String num, String name, String vendor, int quantity, 
-			int id, String ext, String unit, String location){
+	public addPartModel(String num, String name, String vendor, String ext, String unit){
 
 		this.num = num;
 		this.name = name;
