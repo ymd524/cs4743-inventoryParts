@@ -34,7 +34,8 @@ public class inventoryModel {
 	public ArrayList<String> itemArray = new ArrayList();
 	public ArrayList<String> unitList = new ArrayList();
 	public addPartModel testPart;
-	public gatewaySQL gateway = new gatewaySQL("ymd524", "ymd524", "HRqEF9KWp7MFw04SR0zZ");
+	//public gatewaySQL gateway = new gatewaySQL("ymd524", "ymd524", "HRqEF9KWp7MFw04SR0zZ");
+	public gatewaySQL gateway = new gatewaySQL("lop343", "lop343", "dragon91z");
 	public String[] locationsArray;
 	
 	public inventoryModel(){
