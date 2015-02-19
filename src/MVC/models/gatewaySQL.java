@@ -303,19 +303,21 @@ public class gatewaySQL {
 		return rs;
 	}
 	
-	public int getLocationByName(String name){
+	public String getLocationByName(String name){
 		PreparedStatement stmt = null;
-		int i = 0;
+		String str = null;
 		try{
 			stmt = conn.prepareStatement("SELECT * FROM locations where name = ?");
 			stmt.setString(1, name);
 			rs = stmt.executeQuery();
-			i = rs.getInt("id");
+			System.out.println("after stmt 2");
+			rs.first();
+			str = rs.getString("id");
 		}catch(SQLException e){
+			System.out.println("Error gatewaySQL 315");
 			e.printStackTrace();
 		}
-		
-		return i;
+		return str;
 	}
 	
 	
@@ -325,7 +327,7 @@ public class gatewaySQL {
 			stmt = conn.prepareStatement("Select * FROM inventoryItems");
 			rs = stmt.executeQuery();
 			rs.first();
-		}catch(SQLException e){
+		} catch(SQLException e){
 			e.printStackTrace();
 		}
 		return rs;
@@ -361,19 +363,24 @@ public class gatewaySQL {
 		return rs;
 	}
 	
-	public ResultSet getPartsByLocation(int loc){
+	public ResultSet getPartsByLocation(String loc){
 		PreparedStatement stmt = null;
-		try{
+		String str = null;
+		//results = null;
+		try {
 			stmt = conn.prepareStatement("SELECT * FROM inventoryItems WHERE locationId = ? ");
-			stmt.setInt(1, loc);
+			stmt.setString(1, loc);
 			rs = stmt.executeQuery();
 			rs.first();
-		}catch(SQLException e){
+			//results = rs.getString("partId");
+			str = rs.getString("partId");
+
+			System.out.println("getpartbylocation "+str);
+		} catch(SQLException e) {
 			e.printStackTrace();
 		}
 		
 		return rs;
 	}
-	
 	
 }

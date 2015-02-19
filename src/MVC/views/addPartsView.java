@@ -12,8 +12,10 @@ import MVC.controllers.addPartController;
 import MVC.models.inventoryModel;
 
 public class addPartsView extends JFrame{
-	final String[] places = { "Facility 1 Warehouse 1", "Facility 1 Warehouse 2", 
-			  "Facility 1" , "Facility 2" , "Area 51" , "Unknown" };
+/*	final String[] places = { "Facility 1 Warehouse 1", "Facility 1 Warehouse 2", 
+			  "Facility 1" , "Facility 2" , "Area 51" , "Unknown" };*/
+	final String[] choices = { "Unknown", "pieces", 
+			  "feet" , "inches" , "units" , "sets" };
 	private inventoryModel model;
 	private JPanel addPanel = new JPanel();
 	private JPanel buttonPanel = new JPanel();
@@ -35,10 +37,10 @@ public class addPartsView extends JFrame{
 	public addPartsView(inventoryModel model){
 		this.model = model;
 		GridLayout grid = new GridLayout(6,7);
-		arraylist=model.getUnitList();//gets ArrayList of names
+		arraylist = model.getUnitList();//gets ArrayList of names
 		units = new String[arraylist.size()];//creates new String array the size of ArrayList namesArray
 		units = arraylist.toArray(units);//assigns values from arrayList to array
-		combo = new JComboBox(units);
+		combo = new JComboBox(choices);
 
 		this.setLayout(grid);;
 		this.add(numLabel);/*adds labels and text fields to JFrame*/

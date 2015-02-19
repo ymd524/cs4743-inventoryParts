@@ -24,7 +24,7 @@ public class inventoryListView extends JFrame {
 	private JButton addButton = new JButton("Add New Inventory Item");
 	private ArrayList<String> locationList = new ArrayList();
 	private String[] locations;
-	
+	private JList list2;//Zedit
 	public inventoryListView(inventoryModel model){
 		super("Inventory List");
 		this.model = model;
@@ -38,12 +38,14 @@ public class inventoryListView extends JFrame {
 		locations = locationList.toArray(locations);//assigns values from arrayList to array
 		
 		list = new JList(locations);/*creates and formats list with names array values as elements*/
+		list2 = new JList(locations);//Zedit
 		list.setVisibleRowCount(5);
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list.setFixedCellHeight(44);
 		list.setFixedCellWidth(100);
 		
 		this.add(new JScrollPane(list),BorderLayout.WEST);/*adds list and add button to jframe*/
+		//this.add(new JScrollPane(list2), BorderLayout.CENTER);//Zedit
 		this.add(addButton, BorderLayout.SOUTH);
 	}
 	

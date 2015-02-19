@@ -33,6 +33,7 @@ public class inventoryModel {
 	public inventoryItem inventoryItem;
 	public ArrayList<String> itemArray = new ArrayList();
 	public ArrayList<String> unitList = new ArrayList();
+	public ArrayList<String> parts = new ArrayList();
 	public addPartModel testPart;
 	//public gatewaySQL gateway = new gatewaySQL("ymd524", "ymd524", "HRqEF9KWp7MFw04SR0zZ");
 	public gatewaySQL gateway = new gatewaySQL("lop343", "lop343", "dragon91z");
@@ -240,33 +241,36 @@ public class inventoryModel {
 			setCurrentObject(partsList.get(x));
 	}*/
 	
-	public ArrayList getLocationsArray(){
+	public ArrayList<String> getLocationsArray(){
 		results = null;
 		try{
 			results = gateway.getAllLocations();
+			locations.add(results.getString("name"));
 			while(results.next()){
 				locations.add(results.getString("name"));
 			}
 		}catch(SQLException e){
 			throw new RuntimeException(e.getMessage());
 		}
-		
 		return locations;
 	}
-	public ArrayList getNameArray(){
+	
+	
+	
+	public ArrayList<String> getNameArray(){
 		return nameArray;
 	}
 	
-	public ArrayList getInventoryArray(){
+	public ArrayList<String> getInventoryArray(){
 		return inventoryArray;
 	}
 	
-	public ArrayList getUnitList(){
+	public ArrayList<String> getUnitList(){
 		UnitList();
 		return unitList;
 	}
 	
-	public ArrayList getObjectArray(){
+	public ArrayList<addPartModel> getObjectArray(){
 		return partsList;
 	}
 
@@ -325,10 +329,31 @@ public class inventoryModel {
 		return errorArray;
 	}
 	
-	public int getLocationIdPartByName(String name){
-		int i = 0;
-		i = gateway.getLocationByName(name);
-		return i;
+	public ArrayList<String> getLocationIdPartByName(String name){
+		String str;
+		str = gateway.getLocationByName(name);
+		System.out.println("correct locationid = " +str);
+		//get partname form location id
+		
+		results = gateway.getPartsByLocation(str);
+		//returns multiple partids
+		try {
+			parts.add(results.getString("partName"));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		System.out.println(parts);
+		//System.out.println("inventoryModel line 331 int return = " + str);
+		return parts;
+	}
+	
+	public int getPartsById(int id){
+		int a =0;
+		//a = geateway.getPartsById();
+		System.out.println();
+		return a;
 	}
 	
 	/*
