@@ -23,6 +23,8 @@ public class inventoryListView extends JFrame {
 	private JList list;
 	private JButton addButton = new JButton("Add New Inventory Item");
 	private ArrayList<String> locationList = new ArrayList();
+	private ArrayList<String> partsList = new ArrayList();
+	private String[] parts;
 	private String[] locations;
 	private JList list2;//Zedit
 	public inventoryListView(inventoryModel model){
@@ -37,8 +39,12 @@ public class inventoryListView extends JFrame {
 		locations = new String[locationList.size()];//creates new String array the size of ArrayList namesArray
 		locations = locationList.toArray(locations);//assigns values from arrayList to array
 		
+		//partsList = model.getPartsL();
+		//parts = new String[partsList.size()];
+		//parts = partsList.toArray(parts);
+		
 		list = new JList(locations);/*creates and formats list with names array values as elements*/
-		list2 = new JList(locations);//Zedit
+		//list2 = new JList(parts);//Zedit
 		list.setVisibleRowCount(5);
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list.setFixedCellHeight(44);
@@ -50,10 +56,10 @@ public class inventoryListView extends JFrame {
 	}
 	
 	public void registerListeners(showInventoryController controller1, menuController controller2) {
-		System.out.println("made it here");
 		list.addListSelectionListener(controller1);
 		//lcombo.addListSelectionListener(controller1);
 		addButton.addActionListener(controller2);
+		//System.out.println("returned value" +getSelectedValue());
 
 	}
 	

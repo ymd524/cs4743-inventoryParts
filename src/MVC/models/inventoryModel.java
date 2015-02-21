@@ -38,7 +38,7 @@ public class inventoryModel {
 	//public gatewaySQL gateway = new gatewaySQL("ymd524", "ymd524", "HRqEF9KWp7MFw04SR0zZ");
 	public gatewaySQL gateway = new gatewaySQL("lop343", "lop343", "dragon91z");
 	public String[] locationsArray;
-	
+	public String[] partsArray;
 	public inventoryModel(){
 		
 	}
@@ -235,12 +235,6 @@ public class inventoryModel {
 		return currentId;
 	}
 	
-
-	
-	/*public void getObjectByInt(int x){
-			setCurrentObject(partsList.get(x));
-	}*/
-	
 	public ArrayList<String> getLocationsArray(){
 		results = null;
 		try{
@@ -272,6 +266,10 @@ public class inventoryModel {
 	
 	public ArrayList<addPartModel> getObjectArray(){
 		return partsList;
+	}
+	public ArrayList<String> getPartsL(){
+		System.out.println(parts);
+		return parts;
 	}
 
 	public void getInventoryList() {
@@ -330,30 +328,33 @@ public class inventoryModel {
 	}
 	
 	public ArrayList<String> getLocationIdPartByName(String name){
-		String str;
+		String str, restr = null;
+		ArrayList<Integer> arl = new ArrayList<Integer>();
+		arl.clear();
+		int count=0;
 		str = gateway.getLocationByName(name);
-		System.out.println("correct locationid = " +str);
-		//get partname form location id
-		
 		results = gateway.getPartsByLocation(str);
-		//returns multiple partids
 		try {
-			parts.add(results.getString("partName"));
-		} catch (SQLException e) {
+			arl.add(results.getInt("partId"));
+			while(results.next()){
+				arl.add(results.getInt("partId"));
+			}
+		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e1.printStackTrace();
 		}
-		
-		System.out.println(parts);
-		//System.out.println("inventoryModel line 331 int return = " + str);
+		while (count < arl.size()) {
+			results = gateway.getPartName(arl.get(count++));
+			try {
+				restr = results.getString("partName");
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			parts.add(restr);
+		}
+		arl.clear();
 		return parts;
-	}
-	
-	public int getPartsById(int id){
-		int a =0;
-		//a = geateway.getPartsById();
-		System.out.println();
-		return a;
 	}
 	
 	/*

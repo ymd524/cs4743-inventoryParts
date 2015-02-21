@@ -12,8 +12,6 @@ import MVC.controllers.addPartController;
 import MVC.models.inventoryModel;
 
 public class addPartsView extends JFrame{
-/*	final String[] places = { "Facility 1 Warehouse 1", "Facility 1 Warehouse 2", 
-			  "Facility 1" , "Facility 2" , "Area 51" , "Unknown" };*/
 	final String[] choices = { "Unknown", "pieces", 
 			  "feet" , "inches" , "units" , "sets" };
 	private inventoryModel model;
