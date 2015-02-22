@@ -39,7 +39,6 @@ public class editPartController implements ActionListener {
 			model.checkExtLength(ext);
 			model.checkName(name);
 			model.checkUnit(unit);
-			
 			if(model.getFlag() == 0){
 				model.updatePart(num, name, ven, ext, unit);//values updates if necessary
 				model.resetList();//restarts the showPartsView for updated list values

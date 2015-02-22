@@ -9,8 +9,10 @@ import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionListener;
 
 import MVC.controllers.menuController;
+import MVC.controllers.showInvListController;
 import MVC.controllers.showInventoryController;
 import MVC.controllers.showPartsController;
 import MVC.models.addPartModel;
@@ -57,10 +59,7 @@ public class inventoryListView extends JFrame {
 	
 	public void registerListeners(showInventoryController controller1, menuController controller2) {
 		list.addListSelectionListener(controller1);
-		//lcombo.addListSelectionListener(controller1);
 		addButton.addActionListener(controller2);
-		//System.out.println("returned value" +getSelectedValue());
-
 	}
 	
 	public String getSelectedValue() {

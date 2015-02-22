@@ -15,10 +15,7 @@ public class showPartsController implements ListSelectionListener {
 	
 	private showPartsView view;
 	private inventoryModel model;
-	private addPartModel addModel;
 	private partDetailView detailView;
-	private ResultSet results;
-	
 	public showPartsController(showPartsView view, inventoryModel model){
 		this.view = view;
 		this.model = model;		
