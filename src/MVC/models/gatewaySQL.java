@@ -1,7 +1,4 @@
 package MVC.models;
-
-
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
@@ -13,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 import javax.sql.DataSource;
-
 
 /**
  * @author ymd524
@@ -204,6 +200,67 @@ public class gatewaySQL {
         }		
 	}
 	
+	public void updateInvName(String name, int id) {//partId int as string sent
+		// TODO Auto-generated method stub
+		PreparedStatement stmt = null;
+        try {
+            stmt = conn.prepareStatement("UPDATE parts SET partName = ? WHERE id = ?");
+            stmt.setString(1, name);
+            stmt.setInt(2, id);
+            stmt.execute();
+        } catch (SQLException e) {
+        	e.printStackTrace();
+        } finally {
+        	try {
+        		if(stmt != null)
+     			stmt.close();
+        	} catch(SQLException e) {
+        		e.printStackTrace();
+        	}
+        }	
+	}
+
+	public void updateInvL(String location, int id) {//locationId sent not name
+		// TODO Auto-generated method stub
+		PreparedStatement stmt = null;
+		int val = Integer.parseInt(location);
+        try {
+            stmt = conn.prepareStatement("UPDATE parts SET locationId = ? WHERE id = ?");
+            stmt.setInt(1, val);
+            stmt.setInt(2, id);
+            stmt.execute();
+        } catch (SQLException e) {
+        	e.printStackTrace();
+        } finally {
+        	try {
+        		if(stmt != null)
+     			stmt.close();
+        	} catch(SQLException e) {
+        		e.printStackTrace();
+        	}
+        }	
+	}
+
+	public void updateInvQ(String quantity, int id) {
+		// TODO Auto-generated method stub
+		PreparedStatement stmt = null;
+		int val = Integer.parseInt(quantity);
+        try {
+            stmt = conn.prepareStatement("UPDATE inventoryItems SET quantity = ? WHERE id = ?");
+            stmt.setInt(1, val);
+            stmt.setInt(2, id);
+            stmt.execute();
+        } catch (SQLException e) {
+        	e.printStackTrace();
+        } finally {
+        	try {
+        		if(stmt != null)
+     			stmt.close();
+        	} catch(SQLException e) {
+        		e.printStackTrace();
+        	}
+        }	
+	}
 
 	public void addInventoryItem(int partId, int locationId, int quantity){
 		PreparedStatement stmt = null;
@@ -317,6 +374,20 @@ public class gatewaySQL {
 		}
 		return str;
 	}
+	public String getLocationById(int id){
+		PreparedStatement stmt = null;
+		String str = null;
+		try{
+			stmt = conn.prepareStatement("SELECT * FROM locations where id = ?");
+			stmt.setInt(1, id);
+			rs = stmt.executeQuery();
+			rs.first();
+			str = rs.getString("name");
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+		return str;
+	}
 	
 	
 	public ResultSet getAllInventoryItems(){
@@ -369,14 +440,12 @@ public class gatewaySQL {
 			stmt.setString(1, loc);
 			rs = stmt.executeQuery();
 			rs.first();
-			//results = rs.getString("partId");
-			str = rs.getString("partId");
 		} catch(SQLException e) {
 			e.printStackTrace();
 		}
-		
 		return rs;
 	}
+	
 	public ResultSet getPartName(int i){
 		PreparedStatement stmt = null;
 		try{
@@ -388,6 +457,18 @@ public class gatewaySQL {
 			e.printStackTrace();
 		}
 		
+		return rs;
+	}
+	public ResultSet getInvByPartId(String part){
+		PreparedStatement stmt = null;
+		try {
+			stmt = conn.prepareStatement("SELECT * FROM inventoryItems WHERE partId = ? ");
+			stmt.setString(1, part);
+			rs = stmt.executeQuery();
+			rs.first();
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
 		return rs;
 	}
 }

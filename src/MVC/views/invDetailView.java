@@ -1,4 +1,4 @@
-package MVC.controllers;
+package MVC.views;
 
 import java.awt.GridLayout;
 
@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import MVC.controllers.showInvListController;
 import MVC.models.inventoryModel;
 
 public class invDetailView extends JFrame {
@@ -20,24 +21,24 @@ public class invDetailView extends JFrame {
 	private JButton editButton = new JButton("Edit Part");
 	private JButton deleteButton = new JButton("Delete Part");
 	private String partName;
-	private String id;
-	private String  partloc;
-	private String partq;
+	private int id;
+	private String loc;
+	private String invloc;
+	private int partq;
 	public invDetailView(inventoryModel model) {
 		// TODO Auto-generated constructor stub
 		super("Inventory Part Detail");
 		this.model = model;
-		
 		GridLayout grid = new GridLayout(3,7);
-	
-		/*partName = model.getCurrentPartName();
-		partVendor = model.getCurrentPartVendor();
-		partUnit = model.getCurrentPartUnit();
-		extNumber = model.getCurrentPartExt();
-		partId = model.getCurrentPartId();*/
+
+		id = model.getCurrentInvId();
+		partName = model.getCurrentPartName();
+		partq = model.getCurrentInvQ();
+		loc = model.getCurrentLocation();
+		
 		idLabel = new JLabel("ID: " + id);/*creates JLabels displaying values*/
 		nameLabel = new JLabel("Part Name: " + partName);
-		qLabel = new JLabel("Location: " + partloc);
+		qLabel = new JLabel("Location: " + loc);
 		locLabel = new JLabel("Quantity: " + partq);
 
 		this.setLayout(grid);
@@ -55,7 +56,8 @@ public class invDetailView extends JFrame {
 	}
 	
 	public void registerListeners(showInvListController controller) {
-		/*editButton.addActionListener(controller);
-		deleteButton.addActionListener(controller);*/
+		editButton.addActionListener(controller);
+		deleteButton.addActionListener(controller);
 	}
+	
 }

@@ -20,7 +20,6 @@ import MVC.models.inventoryItem;
 import MVC.models.inventoryModel;
 
 public class inventoryListView extends JFrame {
-
 	private inventoryModel model;
 	private JList list;
 	private JButton addButton = new JButton("Add New Inventory Item");
@@ -35,25 +34,16 @@ public class inventoryListView extends JFrame {
 		addList();
 	}
 	
-	
 	public void addList(){
 		locationList=model.getLocationsArray();//gets ArrayList of items
 		locations = new String[locationList.size()];//creates new String array the size of ArrayList namesArray
 		locations = locationList.toArray(locations);//assigns values from arrayList to array
-		
-		//partsList = model.getPartsL();
-		//parts = new String[partsList.size()];
-		//parts = partsList.toArray(parts);
-		
 		list = new JList(locations);/*creates and formats list with names array values as elements*/
-		//list2 = new JList(parts);//Zedit
 		list.setVisibleRowCount(5);
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list.setFixedCellHeight(44);
 		list.setFixedCellWidth(100);
-		
 		this.add(new JScrollPane(list),BorderLayout.WEST);/*adds list and add button to jframe*/
-		//this.add(new JScrollPane(list2), BorderLayout.CENTER);//Zedit
 		this.add(addButton, BorderLayout.SOUTH);
 	}
 	

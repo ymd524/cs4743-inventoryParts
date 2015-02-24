@@ -25,6 +25,7 @@ public class inventoryModel {
 	private int nameIndex = 0;
 	private int id = 1;
 	private ResultSet results;
+	private ResultSet results2;
 	public ArrayList<addPartModel> partsList = new ArrayList();
 	public ArrayList<String> nameArray = new ArrayList();
 	public ArrayList<String> inventoryArray = new ArrayList();
@@ -101,6 +102,22 @@ public class inventoryModel {
 		
 	}
 	
+	public void updateInv(String name, String location, String quantity){
+		int id = getCurrentInvId();
+		
+		if(!getCurrentPartName().equals(name)){
+			gateway.updateInvName(name, id);			
+		}
+		
+		if(!getCurrentPartNumber().equals(location)){
+			gateway.updateInvL(location,id);
+		}
+		
+		if(!getCurrentPartUnit().equals(quantity)){
+			gateway.updateInvQ(quantity,id);
+		}
+		
+	}
 	/*
 	 * closes the current showPartView then instanciates a new one and starts it up
 	 * to update the list on the jframe
@@ -164,13 +181,29 @@ public class inventoryModel {
 		results = gateway.getPartByName(name);
 	}
 	
+	public void setCurrentInventory(String name){
+		String str = null;
+		results = null;
+		results2 = null;
+		
+		results = gateway.getPartByName(name);
+		try{
+			str = results.getString("id");
+		}catch(SQLException e){
+			throw new RuntimeException(e.getMessage());
+		}
+		results2 = gateway.getInvByPartId(str);
+	}
+	
 	/*
 	 * getters
 	 */
 	public ResultSet getCurrentPart(){
 		return results;
 	}
-	
+	public ResultSet getCurrentInv(){
+		return results2;
+	}
 	public String getCurrentPartName(){
 		String str=null;
 		try{
@@ -230,10 +263,40 @@ public class inventoryModel {
 		}
 		return id;
 	}
+	public int getCurrentInvQ(){
+		int val =0;
+		try{
+			val = results2.getInt("quantity");
+		}catch(SQLException e){
+			throw new RuntimeException(e.getMessage());
+		}
+		return val;
+	}
 	
+	public String getCurrentLocation() {
+		int id=0;
+		String str;
+		try{
+			id = results2.getInt("locationId");
+		}catch(SQLException e){
+			throw new RuntimeException(e.getMessage());
+		}
+		str = gateway.getLocationById(id);
+		return str;
+	}
+	
+	public int getCurrentInvId() {
+		int id=0;
+		try{
+			id = results2.getInt("id");
+		}catch(SQLException e){
+			throw new RuntimeException(e.getMessage());
+		}
+		return id;
+	}
 	public int getCurrentId(){
 		return currentId;
-	}
+	}	
 	
 	public ArrayList<String> getLocationsArray(){
 		results = null;
@@ -248,8 +311,6 @@ public class inventoryModel {
 		}
 		return locations;
 	}
-	
-	
 	
 	public ArrayList<String> getNameArray(){
 		return nameArray;
@@ -268,7 +329,6 @@ public class inventoryModel {
 		return partsList;
 	}
 	public ArrayList<String> getPartsL(){
-		System.out.println(parts);
 		return parts;
 	}
 

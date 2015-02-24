@@ -18,7 +18,6 @@ import MVC.views.addPartsView;
 import MVC.views.inventoryListView;
 import MVC.views.partDetailView;
 
-
 public class showInventoryController implements ListSelectionListener  {
 
 	private inventoryListView view;
@@ -26,7 +25,7 @@ public class showInventoryController implements ListSelectionListener  {
 	private ArrayList<String> partList = new ArrayList<String>();
 	private String[] parts;
 	private JList list;
-	private MVC.controllers.invDetailView invDetailView;
+	private MVC.views.invDetailView invDetailView;
 	public showInventoryController(inventoryListView view, inventoryModel model){
 		this.view = view;
 		this.model = model;
@@ -47,37 +46,26 @@ public class showInventoryController implements ListSelectionListener  {
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list.setFixedCellHeight(44);
 		list.setFixedCellWidth(100);
-		
-		
 		view.add(new JScrollPane(list),BorderLayout.CENTER);
 		view.setVisible(true);
-		//view.repaint();
 		list.addListSelectionListener(new ListSelectionListener() {
-	         //private inventoryModel model;
-			//private inventoryListView view;
-
 			@Override
 	         public void valueChanged(ListSelectionEvent e2) {
 	     		if (e2.getValueIsAdjusting())
 	    			return;
 	     		
-	            System.out.println(e2);
-	    		invDetailView = new MVC.controllers.invDetailView(model);
-	    		/*showInvListController controller1 = new showInvListController(this.model, this.view);
-	    		invDetailView.registerListeners(controller1);*/
-	    		invDetailView.setSize(250, 150);
+	            String str = list.getSelectedValue().toString();
+	     		model.setCurrentInventory(str);
+	    		invDetailView = new MVC.views.invDetailView(model);
+	    		showInvListController controller1 = new showInvListController(model, view);
+	    		invDetailView.registerListeners(controller1);
+	    		invDetailView.setSize(250, 250);
 	    		invDetailView.setLocation(800, 0);
 	    		invDetailView.setVisible(true);
 	    		view.repaint();
 	    		view.revalidate();
 	         }
 	      });
-		/*invDetailView = new MVC.controllers.invDetailView(model);
-		showInvListController controller1 = new showInvListController(this.model, this.view);
-		invDetailView.registerListeners(controller1);
-		invDetailView.setSize(350, 250);
-		invDetailView.setLocation(500, 40);
-		invDetailView.setVisible(true);	*/
 		partList.clear();
 		
 	}
