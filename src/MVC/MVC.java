@@ -37,6 +37,7 @@ public class MVC {
 			inventoryView.registerListeners(inventoryController, menuController);//register controllers as listeners
 			inventoryView.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//starts up inventoryView
 			inventoryView.setSize(400, 300);
+			inventoryView.setLocation(400, 0);
 			inventoryView.setVisible(true);	
 		
 		}

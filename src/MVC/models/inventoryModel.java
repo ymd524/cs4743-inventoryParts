@@ -25,6 +25,7 @@ public class inventoryModel {
 	private int nameIndex = 0;
 	private int id = 1;
 	private ResultSet results;
+	private ResultSet results2;
 	public ArrayList<addPartModel> partsList = new ArrayList();
 	public ArrayList<String> nameArray = new ArrayList();
 	public ArrayList<String> inventoryArray = new ArrayList();
@@ -33,10 +34,12 @@ public class inventoryModel {
 	public inventoryItem inventoryItem;
 	public ArrayList<String> itemArray = new ArrayList();
 	public ArrayList<String> unitList = new ArrayList();
+	public ArrayList<String> parts = new ArrayList();
 	public addPartModel testPart;
-	public gatewaySQL gateway = new gatewaySQL("ymd524", "ymd524", "HRqEF9KWp7MFw04SR0zZ");
+	//public gatewaySQL gateway = new gatewaySQL("ymd524", "ymd524", "HRqEF9KWp7MFw04SR0zZ");
+	public gatewaySQL gateway = new gatewaySQL("lop343", "lop343", "dragon91z");
 	public String[] locationsArray;
-	
+	public String[] partsArray;
 	public inventoryModel(){
 		
 	}
@@ -99,6 +102,22 @@ public class inventoryModel {
 		
 	}
 	
+	public void updateInv(String name, String location, String quantity){
+		int id = getCurrentInvId();
+		
+		if(!getCurrentPartName().equals(name)){
+			gateway.updateInvName(name, id);			
+		}
+		
+		if(!getCurrentPartNumber().equals(location)){
+			gateway.updateInvL(location,id);
+		}
+		
+		if(!getCurrentPartUnit().equals(quantity)){
+			gateway.updateInvQ(quantity,id);
+		}
+		
+	}
 	/*
 	 * closes the current showPartView then instanciates a new one and starts it up
 	 * to update the list on the jframe
@@ -162,13 +181,29 @@ public class inventoryModel {
 		results = gateway.getPartByName(name);
 	}
 	
+	public void setCurrentInventory(String name){
+		String str = null;
+		results = null;
+		results2 = null;
+		
+		results = gateway.getPartByName(name);
+		try{
+			str = results.getString("id");
+		}catch(SQLException e){
+			throw new RuntimeException(e.getMessage());
+		}
+		results2 = gateway.getInvByPartId(str);
+	}
+	
 	/*
 	 * getters
 	 */
 	public ResultSet getCurrentPart(){
 		return results;
 	}
-	
+	public ResultSet getCurrentInv(){
+		return results2;
+	}
 	public String getCurrentPartName(){
 		String str=null;
 		try{
@@ -228,45 +263,73 @@ public class inventoryModel {
 		}
 		return id;
 	}
-	
-	public int getCurrentId(){
-		return currentId;
+	public int getCurrentInvQ(){
+		int val =0;
+		try{
+			val = results2.getInt("quantity");
+		}catch(SQLException e){
+			throw new RuntimeException(e.getMessage());
+		}
+		return val;
 	}
 	
-
+	public String getCurrentLocation() {
+		int id=0;
+		String str;
+		try{
+			id = results2.getInt("locationId");
+		}catch(SQLException e){
+			throw new RuntimeException(e.getMessage());
+		}
+		str = gateway.getLocationById(id);
+		return str;
+	}
 	
-	/*public void getObjectByInt(int x){
-			setCurrentObject(partsList.get(x));
-	}*/
+	public int getCurrentInvId() {
+		int id=0;
+		try{
+			id = results2.getInt("id");
+		}catch(SQLException e){
+			throw new RuntimeException(e.getMessage());
+		}
+		return id;
+	}
+	public int getCurrentId(){
+		return currentId;
+	}	
 	
-	public ArrayList getLocationsArray(){
+	public ArrayList<String> getLocationsArray(){
 		results = null;
 		try{
 			results = gateway.getAllLocations();
+			locations.add(results.getString("name"));
 			while(results.next()){
 				locations.add(results.getString("name"));
 			}
 		}catch(SQLException e){
 			throw new RuntimeException(e.getMessage());
 		}
-		
 		return locations;
 	}
-	public ArrayList getNameArray(){
+	
+	public ArrayList<String> getNameArray(){
 		return nameArray;
 	}
 	
-	public ArrayList getInventoryArray(){
+	public ArrayList<String> getInventoryArray(){
 		return inventoryArray;
 	}
 	
-	public ArrayList getUnitList(){
+	public ArrayList<String> getUnitList(){
 		UnitList();
 		return unitList;
 	}
 	
-	public ArrayList getObjectArray(){
+	public ArrayList<addPartModel> getObjectArray(){
 		return partsList;
+	}
+	public ArrayList<String> getPartsL(){
+		return parts;
 	}
 
 	public void getInventoryList() {
@@ -324,10 +387,34 @@ public class inventoryModel {
 		return errorArray;
 	}
 	
-	public int getLocationIdPartByName(String name){
-		int i = 0;
-		i = gateway.getLocationByName(name);
-		return i;
+	public ArrayList<String> getLocationIdPartByName(String name){
+		String str, restr = null;
+		ArrayList<Integer> arl = new ArrayList<Integer>();
+		arl.clear();
+		int count=0;
+		str = gateway.getLocationByName(name);
+		results = gateway.getPartsByLocation(str);
+		try {
+			arl.add(results.getInt("partId"));
+			while(results.next()){
+				arl.add(results.getInt("partId"));
+			}
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		while (count < arl.size()) {
+			results = gateway.getPartName(arl.get(count++));
+			try {
+				restr = results.getString("partName");
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			parts.add(restr);
+		}
+		arl.clear();
+		return parts;
 	}
 	
 	/*
