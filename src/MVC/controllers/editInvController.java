@@ -40,10 +40,10 @@ public class editInvController implements ActionListener {
 			model.checkQuantity(q);
 			model.checkName(name);
 			if (model.getFlag() == 0) {
-				
 				//model.updatePart(num, name, ven, ext, unit);
+				model.updateInv(name, loc, quantity);
 				
-				model.resetList();
+				model.resetInv();
 				view.closeWindow();// close editPartView
 			} else if (model.getFlag() == 1) {
 				errorView = new errorView(model);// creates new errorView

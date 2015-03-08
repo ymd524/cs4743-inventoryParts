@@ -82,6 +82,23 @@ public class gatewaySQL {
         }		
 	}
 	
+	public void deleteInvItem(int id){
+		PreparedStatement stmt = null;
+        try {
+            stmt = conn.prepareStatement("DELETE FROM inventoryItems WHERE partId = ?");
+            stmt.setInt(1, id);
+            stmt.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+        	try {
+        		if(stmt != null)
+        			stmt.close();
+        	} catch(SQLException e) {
+        		e.printStackTrace();
+        	}
+        }		
+	}
 	
 	public void updatePart(String partNum, String partName, String vendor, String unit, String extNum) {
 		PreparedStatement stmt = null;

@@ -9,13 +9,18 @@ import javax.swing.JFrame;
 import javax.swing.JList;
 
 import MVC.controllers.menuController;
+import MVC.controllers.showInventoryController;
 import MVC.controllers.showPartsController;
+import MVC.views.inventoryListView;
 import MVC.views.showPartsView;
 
 public class inventoryModel {
 	private addPartModel newPart;
 	public addPartModel currentObject;
 	private showPartsView showView;
+	private inventoryListView showInv;
+	private inventoryListView invView;
+	private showInventoryController invController;
 	private menuController menuController;
 	private showPartsController controller;
 	private int currentId = 0;
@@ -52,8 +57,9 @@ public class inventoryModel {
 	public void deletePart(int id){
 		nameArray.remove(getCurrentPartName());
 		gateway.deletePart(id);
-
 	}
+	
+	
 	
 	/*
 	 * adds new instance of addPartModel to arraylist and the name value to arraylist of names
@@ -105,15 +111,19 @@ public class inventoryModel {
 	public void updateInv(String name, String location, String quantity){
 		int id = getCurrentInvId();
 		
-		if(!getCurrentPartName().equals(name)){
+		int a = getCurrentInvPart();
+		String aStr = Integer.toString(a);
+		if(!aStr.equals(name)){
 			gateway.updateInvName(name, id);			
 		}
 		
-		if(!getCurrentPartNumber().equals(location)){
+		if(!getCurrentLocation().equals(location)){
 			gateway.updateInvL(location,id);
 		}
 		
-		if(!getCurrentPartUnit().equals(quantity)){
+		int n = getCurrentInvQ();
+		aStr = Integer.toString(n);
+		if(!aStr.equals(quantity)){
 			gateway.updateInvQ(quantity,id);
 		}
 		
@@ -136,6 +146,21 @@ public class inventoryModel {
 		showView.setVisible(true);			
 	}
 	
+	public void resetInv(){
+
+		invView.removeList();
+		invView = new inventoryListView(this); 
+		invController = invView.getController();
+		menuController = invView.getMenuController();
+		
+		//currentObject = null;
+		//setCurrentObject(currentObject);
+		
+		invView.registerListeners(invController, menuController);
+		invView.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		invView.setSize(250, 250);
+		invView.setVisible(true);			
+	}
 	/*
 	 * setters
 	 */
@@ -147,6 +172,10 @@ public class inventoryModel {
 	
 	public void setShowView(showPartsView showView){
 		this.showView = showView;
+	}
+	
+	public void setInvView(inventoryListView showInv) {
+		this.showInv = showInv;
 	}
 	
 	public void setCurrentObject(addPartModel currObject){
@@ -294,6 +323,16 @@ public class inventoryModel {
 		}
 		return id;
 	}
+	
+	public int getCurrentInvPart() {
+		int id=0;
+		try{
+			id = results2.getInt("partId");
+		}catch(SQLException e){
+			throw new RuntimeException(e.getMessage());
+		}
+		return id;
+	}
 	public int getCurrentId(){
 		return currentId;
 	}	
@@ -392,6 +431,8 @@ public class inventoryModel {
 		ArrayList<Integer> arl = new ArrayList<Integer>();
 		arl.clear();
 		int count=0;
+		
+		//System.out.println("Here!!");
 		str = gateway.getLocationByName(name);
 		results = gateway.getPartsByLocation(str);
 		try {
@@ -403,6 +444,7 @@ public class inventoryModel {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		//System.out.println("Here!!");
 		while (count < arl.size()) {
 			results = gateway.getPartName(arl.get(count++));
 			try {
@@ -414,6 +456,8 @@ public class inventoryModel {
 			parts.add(restr);
 		}
 		arl.clear();
+		
+		//System.out.println("Here!!");
 		return parts;
 	}
 	

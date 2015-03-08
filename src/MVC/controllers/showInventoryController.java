@@ -36,6 +36,7 @@ public class showInventoryController implements ListSelectionListener  {
 		if (e.getValueIsAdjusting())
 			return;
 		partList.clear();
+		System.out.println("outer valueChanged " +e.getValueIsAdjusting());
 		String command = view.getSelectedValue();//gets and assigns the selected value from JList to command
 		partList = model.getLocationIdPartByName(command);		
 		partList = model.getPartsL();
@@ -48,13 +49,16 @@ public class showInventoryController implements ListSelectionListener  {
 		list.setFixedCellWidth(100);
 		view.add(new JScrollPane(list),BorderLayout.CENTER);
 		view.setVisible(true);
+		view.revalidate();
 		list.addListSelectionListener(new ListSelectionListener() {
 			@Override
 	         public void valueChanged(ListSelectionEvent e2) {
 	     		if (e2.getValueIsAdjusting())
 	    			return;
-	     		
+	     		view.revalidate();
+	    		System.out.println("inner valueChanged " +e2.getValueIsAdjusting());
 	            String str = list.getSelectedValue().toString();
+	            //System.out.println("inner valueChanged  " +str);
 	     		model.setCurrentInventory(str);
 	    		invDetailView = new MVC.views.invDetailView(model);
 	    		showInvListController controller1 = new showInvListController(model, view);

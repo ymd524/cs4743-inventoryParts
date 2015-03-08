@@ -27,10 +27,13 @@ public class inventoryListView extends JFrame {
 	private ArrayList<String> partsList = new ArrayList();
 	private String[] parts;
 	private String[] locations;
-	private JList list2;//Zedit
+	private showInventoryController controller1;
+	private menuController controller2;
 	public inventoryListView(inventoryModel model){
 		super("Inventory List");
 		this.model = model;
+		model.setInvView(this);
+		//delete part entry and Inventory item entry
 		addList();
 	}
 	
@@ -53,6 +56,19 @@ public class inventoryListView extends JFrame {
 	}
 	
 	public String getSelectedValue() {
+		//System.out.println("Inv ID: "+model.getCurrentInvId());
 		return list.getSelectedValue().toString();
+	}
+	
+	public void removeList(){
+		this.dispose();
+	}
+	
+	public showInventoryController getController(){
+		return controller1;
+	}
+	
+	public menuController getMenuController(){
+		return controller2;
 	}
 }
