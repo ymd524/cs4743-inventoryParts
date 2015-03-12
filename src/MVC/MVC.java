@@ -1,9 +1,6 @@
 package MVC;
 
-import java.awt.event.*
-;
 
-import javax.swing.Timer;
 import javax.swing.JFrame;
 
 import MVC.controllers.menuController;
