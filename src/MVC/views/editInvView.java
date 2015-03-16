@@ -1,6 +1,8 @@
 package MVC.views;
 
 import java.awt.GridLayout;
+import java.sql.Timestamp;
+import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -23,6 +25,9 @@ public class editInvView extends JFrame {
 	private JTextField nameText = new JTextField(255);
 	private JTextField locText = new JTextField(255);
 	private JTextField qText = new JTextField(20);
+	private Date d;
+	private java.util.Date date2;
+	
 	public editInvView(inventoryModel model) {
 		// TODO Auto-generated constructor stub
 		this.model = model;

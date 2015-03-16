@@ -32,6 +32,9 @@ public class inventoryListView extends JFrame {
 	public inventoryListView(inventoryModel model){
 		super("Inventory List");
 		this.model = model;
+		controller1 = new showInventoryController(this, this.model);
+		//controller2 = new menuController(this.model, this);
+		
 		model.setInvView(this);
 		//delete part entry and Inventory item entry
 		addList();
@@ -41,6 +44,7 @@ public class inventoryListView extends JFrame {
 		locationList=model.getLocationsArray();//gets ArrayList of items
 		locations = new String[locationList.size()];//creates new String array the size of ArrayList namesArray
 		locations = locationList.toArray(locations);//assigns values from arrayList to array
+		
 		list = new JList(locations);/*creates and formats list with names array values as elements*/
 		list.setVisibleRowCount(5);
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -56,11 +60,10 @@ public class inventoryListView extends JFrame {
 	}
 	
 	public String getSelectedValue() {
-		//System.out.println("Inv ID: "+model.getCurrentInvId());
 		return list.getSelectedValue().toString();
 	}
 	
-	public void removeList(){
+	public void removeListInv(){
 		this.dispose();
 	}
 	

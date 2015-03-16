@@ -23,7 +23,9 @@ public class deleteInvController implements ActionListener {
 		if (command.equals("Cancel")) {
 			view.closeWindow();
 		}else if (command.equals("Delete")){
-			model.deletePart(model.getCurrentInvId());
+			model.deletePart(model.getCurrentInvPart());
+			model.deleteInv(model.getCurrentInvId());
+			//model.deleteInv(model.getCurrentInvPart());
 			model.resetInv();
 			view.closeWindow();
 		}	

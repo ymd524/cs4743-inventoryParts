@@ -37,8 +37,6 @@ public class partDetailView extends JFrame{
 	private int partId;
 	private String partloc;
 
-
-
 	public partDetailView(inventoryModel model) {
 		super("Part Detail");
 		this.model = model;
