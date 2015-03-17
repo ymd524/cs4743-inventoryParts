@@ -58,7 +58,6 @@ public class showPartsView extends JFrame{
 		this.dispose();//disposes current instance of showPartsView
 	}
 	
-	
 	/*
 	 * getters
 	 * 

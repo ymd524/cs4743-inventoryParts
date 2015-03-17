@@ -40,24 +40,27 @@ public class editInvController implements ActionListener {
 		} else if (command.equals("Save")) {
 			String name = view.getNameText();
 			String loc = view.getLocText();
-			String quantity = view.getQText();
-			int q = Integer.parseInt(quantity);
+			int quantity = view.getQText();
 
 			//System.out.println("name= " +name+ " location= " +loc+ " quantity=" +quantity);
 			model.checkNameLength(name);
-			model.checkQuantity(q);
+			model.checkQuantity(quantity);
 			model.checkName(name);
+			model.checkPL(name, loc);
+			
 			if (model.getFlag() == 0) {
 				//model.setCurrentInventory(name);
 				date = model.getCurrentTime();
 	    		//System.out.println("DATE RIGHT BEFORE SAVING IN EDIT INV CONTROLLER = "+ date);
 				if (d.equals(date)) {
-					model.updateInv(name, loc, quantity);
+					String q = String.valueOf(quantity);
+					model.updateInv(name, loc, q);
 					//System.out.println("Here in actionPerformed");
 				} else {
 					  JOptionPane.showMessageDialog(null, "Needs to refresh view, information has changed.");
 				}
 				model.resetInv();
+				model.resetList();
 				view.closeWindow();
 			} else if (model.getFlag() == 1) {
 				errorView = new errorView(model);// creates new errorView

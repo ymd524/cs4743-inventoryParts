@@ -452,11 +452,11 @@ public class gatewaySQL {
 		PreparedStatement stmt = null;
 		String str = null;
 		try{
-			stmt = conn.prepareStatement("SELECT partName FROM parts WHERE id = ? ");
+			stmt = conn.prepareStatement("SELECT * FROM parts WHERE id = ? ");
 			stmt.setInt(1, i);
 			rs = stmt.executeQuery();
 			rs.first();
-			str = rs.toString();
+			str = rs.getString("partName");
 		}catch(SQLException e){
 			e.printStackTrace();
 		}
@@ -464,6 +464,22 @@ public class gatewaySQL {
 		return str;
 	}
 	
+	public int getPartIdByName(String name){
+		PreparedStatement stmt = null;
+		int id = 0;
+		try{
+			stmt = conn.prepareStatement("SELECT * FROM parts WHERE partName = ? ");
+			stmt.setString(1, name);
+			rs = stmt.executeQuery();
+			rs.first();
+			id = rs.getInt("id");
+			//System.out.println("getPartIdByName = " +id);
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+		
+		return id;
+	}
 	public ResultSet getPartByName(String name){
 		PreparedStatement stmt = null;
 		try{

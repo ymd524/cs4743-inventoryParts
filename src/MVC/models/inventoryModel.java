@@ -76,7 +76,11 @@ public class inventoryModel {
 		gateway.addPart(num, name, vendor, unit, ext);	
 	}		
 	
-	public void addInventoryItem(int partId, int locationId, int quantity){
+	public void addInventoryItem(String name, String loc, int quantity){
+		
+		int partId = gateway.getPartIdByName(name);
+		String locationstr = gateway.getLocationByName(loc);
+		int locationId = Integer.parseInt(locationstr);
 		gateway.addInventoryItem(partId, locationId, quantity);
 		//inventoryItem = new inventoryItem(part, location, quantity);
 		//inventoryList.add(inventoryItem);
@@ -430,8 +434,10 @@ public class inventoryModel {
 	
 	public void getPartsList() {
 		results = null;
+		nameArray.clear();
 		try{
 			results = gateway.getAllParts();
+			nameArray.add(results.getString("partName"));
 			while(results.next()){
 				nameArray.add(results.getString("partName"));
 			}
@@ -612,5 +618,40 @@ public class inventoryModel {
 		}
 	}
 	
+	public void checkPL(String name, String location) {
+		//check if location and part match already exist
+		int flag = 0;
+		String error = null;
+		String parts = null;
+		int matching = 0;
+		
+		String str = gateway.getLocationByName(location);
+		//System.out.println("str = " +str);
+		results3 = gateway.getPartsByLocation(str);
+		try {
+			matching = results3.getInt("partId");
+			parts = gateway.getPartNameById(matching);
+			//System.out.println("frist matching = " +matching + " part = " +parts);
+			while(results3.next()){
+				if (name.equals(parts)) {
+					flag = 1;
+					//System.out.println("if statment matching = " +matching + " part = " +parts);
+					break;
+				}
+				matching = results3.getInt("partId");
+				parts = gateway.getPartNameById(matching);
+				//System.out.println("while matching = " +matching + " part = " +parts);
+			}
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		if (flag == 1) {
+			//System.out.println("Error");
+			setFlag(1);
+			error = "Part/Location already exist";
+			setError(error);
+		}
+	}
 	
 }
