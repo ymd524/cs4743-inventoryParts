@@ -13,7 +13,7 @@ import MVC.controllers.showPartsController;
 import MVC.views.showPartsView;
 
 public class inventoryModel {
-	private addPartModel newPart;
+	//private addPartModel newPart;
 	public addPartModel currentObject;
 	private showPartsView showView;
 	private menuController menuController;
@@ -36,8 +36,8 @@ public class inventoryModel {
 	public ArrayList<String> unitList = new ArrayList();
 	public ArrayList<String> parts = new ArrayList();
 	public addPartModel testPart;
-	//public gatewaySQL gateway = new gatewaySQL("ymd524", "ymd524", "HRqEF9KWp7MFw04SR0zZ");
-	public gatewaySQL gateway = new gatewaySQL("lop343", "lop343", "dragon91z");
+	public gatewaySQL gateway = new gatewaySQL("ymd524", "ymd524", "HRqEF9KWp7MFw04SR0zZ");
+	//public gatewaySQL gateway = new gatewaySQL("lop343", "lop343", "dragon91z");
 	public String[] locationsArray;
 	public String[] partsArray;
 	public inventoryModel(){
