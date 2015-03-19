@@ -1,4 +1,4 @@
-package MVC.controllers;
+/*package MVC.controllers;
 
 import java.awt.BorderLayout;
 import java.io.PrintStream;
@@ -71,3 +71,4 @@ public class showInventoryController2 implements ListSelectionListener  {
 	}
 }
 
+*/
