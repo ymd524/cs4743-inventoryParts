@@ -4,18 +4,24 @@ import java.awt.List;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.JFrame;
 import javax.swing.JList;
 
 import MVC.controllers.menuController;
+import MVC.controllers.showInventoryController;
 import MVC.controllers.showPartsController;
+import MVC.views.inventoryListView;
 import MVC.views.showPartsView;
 
 public class inventoryModel {
 	//private addPartModel newPart;
 	public addPartModel currentObject;
+	public inventoryItem currentObject2;
 	private showPartsView showView;
+	private inventoryListView invView;
+	private showInventoryController invController;
 	private menuController menuController;
 	private showPartsController controller;
 	private int currentId = 0;
@@ -26,6 +32,7 @@ public class inventoryModel {
 	private int id = 1;
 	private ResultSet results;
 	private ResultSet results2;
+	private ResultSet results3;
 	public ArrayList<addPartModel> partsList = new ArrayList();
 	public ArrayList<String> nameArray = new ArrayList();
 	public ArrayList<String> inventoryArray = new ArrayList();
@@ -52,8 +59,12 @@ public class inventoryModel {
 	public void deletePart(int id){
 		nameArray.remove(getCurrentPartName());
 		gateway.deletePart(id);
-
 	}
+	
+	public void deleteInv(int id){
+		gateway.deleteInventoryItem(id);
+	}
+	
 	
 	/*
 	 * adds new instance of addPartModel to arraylist and the name value to arraylist of names
@@ -65,7 +76,11 @@ public class inventoryModel {
 		gateway.addPart(num, name, vendor, unit, ext);	
 	}		
 	
-	public void addInventoryItem(int partId, int locationId, int quantity){
+	public void addInventoryItem(String name, String loc, int quantity){
+		
+		int partId = gateway.getPartIdByName(name);
+		String locationstr = gateway.getLocationByName(loc);
+		int locationId = Integer.parseInt(locationstr);
 		gateway.addInventoryItem(partId, locationId, quantity);
 		//inventoryItem = new inventoryItem(part, location, quantity);
 		//inventoryList.add(inventoryItem);
@@ -104,16 +119,23 @@ public class inventoryModel {
 	
 	public void updateInv(String name, String location, String quantity){
 		int id = getCurrentInvId();
+		int a = getCurrentInvPart();
+		//System.out.println("currentInvId = "+ id + " currentInvPart id = " +a);
 		
-		if(!getCurrentPartName().equals(name)){
-			gateway.updateInvName(name, id);			
+		
+		String aStr = Integer.toString(a);
+		if(!aStr.equals(name)){
+			gateway.updateInvName(name, a);	
 		}
 		
-		if(!getCurrentPartNumber().equals(location)){
+		
+		if(!getCurrentLocation().equals(location)){
 			gateway.updateInvL(location,id);
 		}
 		
-		if(!getCurrentPartUnit().equals(quantity)){
+		int n = getCurrentInvQ();
+		aStr = Integer.toString(n);
+		if(!aStr.equals(quantity)){
 			gateway.updateInvQ(quantity,id);
 		}
 		
@@ -136,6 +158,22 @@ public class inventoryModel {
 		showView.setVisible(true);			
 	}
 	
+	public void resetInv(){
+
+		invView.removeListInv();
+		invView = new inventoryListView(this); 
+		invController = invView.getController();
+		menuController = invView.getMenuController();
+		
+		currentObject2 = null;
+		setCurrentObject2(currentObject2);
+		
+		invView.registerListeners(invController, menuController);
+		invView.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		invView.setSize(400, 300);
+		invView.setLocation(400, 0);
+		invView.setVisible(true);			
+	}
 	/*
 	 * setters
 	 */
@@ -149,10 +187,16 @@ public class inventoryModel {
 		this.showView = showView;
 	}
 	
+	public void setInvView(inventoryListView invView) {
+		this.invView = invView;
+	}
+	
 	public void setCurrentObject(addPartModel currObject){
 		currentObject = currObject;
 	}
-	
+	public void setCurrentObject2(inventoryItem currObject2){
+		currentObject2 = currObject2;
+	}
 	public void setFlag(int i){
 		flag = i;
 	}
@@ -185,7 +229,7 @@ public class inventoryModel {
 		String str = null;
 		results = null;
 		results2 = null;
-		
+		//System.out.println("setCurrentInventory = "+name);
 		results = gateway.getPartByName(name);
 		try{
 			str = results.getString("id");
@@ -201,9 +245,13 @@ public class inventoryModel {
 	public ResultSet getCurrentPart(){
 		return results;
 	}
+	
 	public ResultSet getCurrentInv(){
+		int i = getCurrentInvId();
+		results2 = gateway.getInvById(i);
 		return results2;
 	}
+	
 	public String getCurrentPartName(){
 		String str=null;
 		try{
@@ -294,12 +342,37 @@ public class inventoryModel {
 		}
 		return id;
 	}
+	
+	public int getCurrentInvPart() {
+		int id=0;
+		try{
+			id = results2.getInt("partId");
+		}catch(SQLException e){
+			throw new RuntimeException(e.getMessage());
+		}
+		return id;
+	}
+	
+	public Date getCurrentTime() {
+		//String date;
+		Date date2;
+		try{
+			//date = results2.getString("lastmodified");
+			date2 = results2.getTimestamp("lastmodified");
+			//System.out.println("date2 = " +date2);
+		}catch(SQLException e){
+			throw new RuntimeException(e.getMessage());
+		}
+		return date2;
+	}
+	
 	public int getCurrentId(){
 		return currentId;
 	}	
 	
 	public ArrayList<String> getLocationsArray(){
 		results = null;
+		locations.clear();
 		try{
 			results = gateway.getAllLocations();
 			locations.add(results.getString("name"));
@@ -361,8 +434,10 @@ public class inventoryModel {
 	
 	public void getPartsList() {
 		results = null;
+		nameArray.clear();
 		try{
 			results = gateway.getAllParts();
+			nameArray.add(results.getString("partName"));
 			while(results.next()){
 				nameArray.add(results.getString("partName"));
 			}
@@ -392,6 +467,7 @@ public class inventoryModel {
 		ArrayList<Integer> arl = new ArrayList<Integer>();
 		arl.clear();
 		int count=0;
+		
 		str = gateway.getLocationByName(name);
 		results = gateway.getPartsByLocation(str);
 		try {
@@ -542,5 +618,40 @@ public class inventoryModel {
 		}
 	}
 	
+	public void checkPL(String name, String location) {
+		//check if location and part match already exist
+		int flag = 0;
+		String error = null;
+		String parts = null;
+		int matching = 0;
+		
+		String str = gateway.getLocationByName(location);
+		//System.out.println("str = " +str);
+		results3 = gateway.getPartsByLocation(str);
+		try {
+			matching = results3.getInt("partId");
+			parts = gateway.getPartNameById(matching);
+			//System.out.println("frist matching = " +matching + " part = " +parts);
+			while(results3.next()){
+				if (name.equals(parts)) {
+					flag = 1;
+					//System.out.println("if statment matching = " +matching + " part = " +parts);
+					break;
+				}
+				matching = results3.getInt("partId");
+				parts = gateway.getPartNameById(matching);
+				//System.out.println("while matching = " +matching + " part = " +parts);
+			}
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		if (flag == 1) {
+			//System.out.println("Error");
+			setFlag(1);
+			error = "Part/Location already exist";
+			setError(error);
+		}
+	}
 	
 }

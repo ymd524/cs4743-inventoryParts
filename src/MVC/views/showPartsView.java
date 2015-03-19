@@ -1,6 +1,5 @@
 package MVC.views;
 
-
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.SQLException;
@@ -12,8 +11,6 @@ import javax.swing.event.*;
 import MVC.controllers.menuController;
 import MVC.controllers.showPartsController;
 import MVC.models.inventoryModel;
-
-
 
 public class showPartsView extends JFrame{
 	
@@ -60,7 +57,6 @@ public class showPartsView extends JFrame{
 	public void removeList(){
 		this.dispose();//disposes current instance of showPartsView
 	}
-	
 	
 	/*
 	 * getters

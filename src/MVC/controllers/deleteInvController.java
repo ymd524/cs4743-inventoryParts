@@ -18,15 +18,16 @@ public class deleteInvController implements ActionListener {
 	}
 	
 	@Override
-    public void actionPerformed(ActionEvent e)
-    {
-		String command = e.getActionCommand();//gets command values from deletePartView
+    public void actionPerformed(ActionEvent e) {
+		String command = e.getActionCommand();
 		if (command.equals("Cancel")) {
-			view.closeWindow();//close deletePartView
+			view.closeWindow();
 		}else if (command.equals("Delete")){
-			model.deletePart(model.getCurrentInvId());
-			model.resetList();//restarts the showPartsView for updated list values
-			view.closeWindow();//closes deletePartView
+			model.deletePart(model.getCurrentInvPart());
+			model.deleteInv(model.getCurrentInvId());
+			model.resetList();
+			model.resetInv();
+			view.closeWindow();
 		}	
     }
 }

@@ -1,10 +1,14 @@
 package MVC.views;
 
 import java.awt.GridLayout;
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import MVC.controllers.showInvListController;
@@ -25,6 +29,8 @@ public class invDetailView extends JFrame {
 	private String loc;
 	private String invloc;
 	private int partq;
+	private Date d;
+	private Date date;
 	public invDetailView(inventoryModel model) {
 		// TODO Auto-generated constructor stub
 		super("Inventory Part Detail");
@@ -50,9 +56,14 @@ public class invDetailView extends JFrame {
 		this.add(deleteButton);
 	}
 
-	//closes part detail view
 	public void closeWindow(){
-		this.closeWindow();		
+		  //System.out.println("closeWindowMethod");
+		  //JOptionPane.showMessageDialog(null, "Closed Window");
+		  //setVisible(false);
+		  
+		  //setVisable(false);
+		//dispose();
+		this.closeWindow();
 	}
 	
 	public void registerListeners(showInvListController controller) {

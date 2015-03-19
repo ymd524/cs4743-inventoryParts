@@ -6,6 +6,7 @@ package MVC.controllers;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
 
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -23,10 +24,12 @@ public class showInvListController implements ActionListener {
 	private inventoryModel model;
 	private editInvView eView;
 	private deleteInvView dView;
-	public showInvListController(inventoryModel model, inventoryListView view) {
+	private Date date;
+	public showInvListController(inventoryModel model, inventoryListView view, Date olddate) {
 		// TODO Auto-generated constructor stub
 		this.view = view;
 		this.model = model;	
+		date = olddate;
 	}
 
 
@@ -36,7 +39,7 @@ public class showInvListController implements ActionListener {
 		String command = arg0.getActionCommand();//gets command from button panel in the partDetailView
 		if (command.equals("Edit Part")) {	
 			eView = new editInvView(model);//creates editPartView
-			editInvController editInventoryController = new editInvController(model, eView);//creates editPartController
+			editInvController editInventoryController = new editInvController(model, eView, date);//creates editPartController
 			eView.registerListeners(editInventoryController);// registers editPartController as listener
 			eView.setSize(350, 250);/*starts new editPartView*/
 			eView.setVisible(true);

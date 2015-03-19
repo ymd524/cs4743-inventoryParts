@@ -2,10 +2,12 @@ package MVC.models;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Properties;
 
@@ -82,6 +84,23 @@ public class gatewaySQL {
         }		
 	}
 	
+	public void deleteInvItem(int id){
+		PreparedStatement stmt = null;
+        try {
+            stmt = conn.prepareStatement("DELETE FROM inventoryItems WHERE partId = ?");
+            stmt.setInt(1, id);
+            stmt.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+        	try {
+        		if(stmt != null)
+        			stmt.close();
+        	} catch(SQLException e) {
+        		e.printStackTrace();
+        	}
+        }		
+	}
 	
 	public void updatePart(String partNum, String partName, String vendor, String unit, String extNum) {
 		PreparedStatement stmt = null;
@@ -184,6 +203,7 @@ public class gatewaySQL {
 	public void updateExtPartNumber(String extPartNumber, int id){
 		PreparedStatement stmt = null;
         try {
+        	//stmt = conn.setTransactionIsolation(0);
             stmt = conn.prepareStatement("UPDATE parts SET extPartNumber = ? WHERE id = ?");
             stmt.setString(1, extPartNumber);
             stmt.setInt(2, id);
@@ -217,7 +237,27 @@ public class gatewaySQL {
         	} catch(SQLException e) {
         		e.printStackTrace();
         	}
-        }	
+        }
+        timeUpdate(id);
+        /*Date today = new Date();     
+        SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String date = DATE_FORMAT.format(today);
+        System.out.println("format yyyy-MM-dd HH:mm:ss :" + date);
+        try {
+            stmt = conn.prepareStatement("UPDATE inventoryItems SET lastmodified = ? WHERE id = ?");
+            stmt.setString(1, date);
+            stmt.setInt(2, id);
+            stmt.execute();
+        } catch (SQLException e) {
+        	e.printStackTrace();
+        } finally {
+        	try {
+        		if(stmt != null)
+     			stmt.close();
+        	} catch(SQLException e) {
+        		e.printStackTrace();
+        	}
+        }	*/
 	}
 
 	public void updateInvL(String location, int id) {//locationId sent not name
@@ -238,7 +278,9 @@ public class gatewaySQL {
         	} catch(SQLException e) {
         		e.printStackTrace();
         	}
-        }	
+        }
+        timeUpdate(id);
+
 	}
 
 	public void updateInvQ(String quantity, int id) {
@@ -260,6 +302,7 @@ public class gatewaySQL {
         		e.printStackTrace();
         	}
         }	
+        timeUpdate(id);
 	}
 
 	public void addInventoryItem(int partId, int locationId, int quantity){
@@ -392,9 +435,12 @@ public class gatewaySQL {
 	
 	public ResultSet getAllInventoryItems(){
 		PreparedStatement stmt = null;
+		
+		//Time x;
 		try{
 			stmt = conn.prepareStatement("Select * FROM inventoryItems");
 			rs = stmt.executeQuery();
+			//rs.updateTime(2, x);
 			rs.first();
 		} catch(SQLException e){
 			e.printStackTrace();
@@ -406,11 +452,11 @@ public class gatewaySQL {
 		PreparedStatement stmt = null;
 		String str = null;
 		try{
-			stmt = conn.prepareStatement("SELECT partName FROM parts WHERE id = ? ");
+			stmt = conn.prepareStatement("SELECT * FROM parts WHERE id = ? ");
 			stmt.setInt(1, i);
 			rs = stmt.executeQuery();
 			rs.first();
-			str = rs.toString();
+			str = rs.getString("partName");
 		}catch(SQLException e){
 			e.printStackTrace();
 		}
@@ -418,6 +464,22 @@ public class gatewaySQL {
 		return str;
 	}
 	
+	public int getPartIdByName(String name){
+		PreparedStatement stmt = null;
+		int id = 0;
+		try{
+			stmt = conn.prepareStatement("SELECT * FROM parts WHERE partName = ? ");
+			stmt.setString(1, name);
+			rs = stmt.executeQuery();
+			rs.first();
+			id = rs.getInt("id");
+			//System.out.println("getPartIdByName = " +id);
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+		
+		return id;
+	}
 	public ResultSet getPartByName(String name){
 		PreparedStatement stmt = null;
 		try{
@@ -470,5 +532,39 @@ public class gatewaySQL {
 			e.printStackTrace();
 		}
 		return rs;
+	}
+	public ResultSet getInvById(int i){
+		PreparedStatement stmt = null;
+		try {
+			stmt = conn.prepareStatement("SELECT * FROM inventoryItems WHERE id = ? ");
+			stmt.setInt(1, i);
+			rs = stmt.executeQuery();
+			rs.first();
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return rs;
+	}
+	public void timeUpdate(int id) {
+		PreparedStatement stmt = null;
+		Date today = new Date();     
+        SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String date = DATE_FORMAT.format(today);
+        /*System.out.println("format yyyy-MM-dd HH:mm:ss :" + date);*/
+        try {
+            stmt = conn.prepareStatement("UPDATE inventoryItems SET lastmodified = ? WHERE id = ?");
+            stmt.setString(1, date);
+            stmt.setInt(2, id);
+            stmt.execute();
+        } catch (SQLException e) {
+        	e.printStackTrace();
+        } finally {
+        	try {
+        		if(stmt != null)
+     			stmt.close();
+        	} catch(SQLException e) {
+        		e.printStackTrace();
+        	}
+        }	
 	}
 }

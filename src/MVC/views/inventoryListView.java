@@ -27,10 +27,16 @@ public class inventoryListView extends JFrame {
 	private ArrayList<String> partsList = new ArrayList();
 	private String[] parts;
 	private String[] locations;
-	private JList list2;//Zedit
+	private showInventoryController controller1;
+	private menuController controller2;
 	public inventoryListView(inventoryModel model){
 		super("Inventory List");
 		this.model = model;
+		controller1 = new showInventoryController(this, this.model);
+		//controller2 = new menuController(this.model, this);
+		
+		model.setInvView(this);
+		//delete part entry and Inventory item entry
 		addList();
 	}
 	
@@ -38,6 +44,7 @@ public class inventoryListView extends JFrame {
 		locationList=model.getLocationsArray();//gets ArrayList of items
 		locations = new String[locationList.size()];//creates new String array the size of ArrayList namesArray
 		locations = locationList.toArray(locations);//assigns values from arrayList to array
+		
 		list = new JList(locations);/*creates and formats list with names array values as elements*/
 		list.setVisibleRowCount(5);
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -54,5 +61,17 @@ public class inventoryListView extends JFrame {
 	
 	public String getSelectedValue() {
 		return list.getSelectedValue().toString();
+	}
+	
+	public void removeListInv(){
+		this.dispose();
+	}
+	
+	public showInventoryController getController(){
+		return controller1;
+	}
+	
+	public menuController getMenuController(){
+		return controller2;
 	}
 }
