@@ -18,7 +18,7 @@ import MVC.views.addPartsView;
 import MVC.views.inventoryListView;
 import MVC.views.partDetailView;
 
-public class showInventoryController implements ListSelectionListener  {
+public class showInventoryController2 implements ListSelectionListener  {
 
 	private inventoryListView view;
 	private inventoryModel model;
@@ -26,7 +26,7 @@ public class showInventoryController implements ListSelectionListener  {
 	private String[] parts;
 	private JList list;
 	private MVC.views.invDetailView invDetailView;
-	public showInventoryController(inventoryListView view, inventoryModel model){
+	public showInventoryController2(inventoryListView view, inventoryModel model){
 		this.view = view;
 		this.model = model;
 	}
@@ -70,3 +70,4 @@ public class showInventoryController implements ListSelectionListener  {
 		
 	}
 }
+
