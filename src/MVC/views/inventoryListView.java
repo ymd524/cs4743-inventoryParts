@@ -1,12 +1,14 @@
 package MVC.views;
 
 import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionListener;
@@ -23,12 +25,14 @@ public class inventoryListView extends JFrame {
 	private inventoryModel model;
 	private JList list;
 	private JButton addButton = new JButton("Add New Inventory Item");
+	private JButton createProduct = new JButton("Create Product");
 	private ArrayList<String> locationList = new ArrayList();
 	private ArrayList<String> partsList = new ArrayList();
 	private String[] parts;
 	private String[] locations;
 	private showInventoryController controller1;
 	private menuController controller2;
+	private menuController controller3;
 	public inventoryListView(inventoryModel model){
 		super("Inventory List");
 		this.model = model;
@@ -41,6 +45,9 @@ public class inventoryListView extends JFrame {
 	}
 	
 	public void addList(){
+		JPanel subPanel = new JPanel();
+		subPanel.setLayout(new GridLayout(1, 2));
+		
 		locationList=model.getLocationsArray();//gets ArrayList of items
 		locations = new String[locationList.size()];//creates new String array the size of ArrayList namesArray
 		locations = locationList.toArray(locations);//assigns values from arrayList to array
@@ -51,12 +58,16 @@ public class inventoryListView extends JFrame {
 		list.setFixedCellHeight(44);
 		list.setFixedCellWidth(100);
 		this.add(new JScrollPane(list),BorderLayout.WEST);/*adds list and add button to jframe*/
-		this.add(addButton, BorderLayout.SOUTH);
+		subPanel.add(addButton, BorderLayout.WEST);
+		subPanel.add(createProduct, BorderLayout.EAST);
+		this.add(subPanel, BorderLayout.SOUTH);
 	}
 	
-	public void registerListeners(showInventoryController controller1, menuController controller2) {
+	public void registerListeners(showInventoryController controller1, menuController controller2, 
+			menuController controller3) {
 		list.addListSelectionListener(controller1);
 		addButton.addActionListener(controller2);
+		createProduct.addActionListener(controller3);
 	}
 	
 	public String getSelectedValue() {
@@ -73,5 +84,8 @@ public class inventoryListView extends JFrame {
 	
 	public menuController getMenuController(){
 		return controller2;
+	}
+	public menuController getMenuController3(){
+		return controller3;
 	}
 }

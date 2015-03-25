@@ -38,6 +38,9 @@ public class menuController implements ActionListener{
 			addinvView.setSize(400, 300);
 			addinvView.setVisible(true);
 			//System.out.println("menuController = " +command);
+		} else if (command.equals("Create Product")) {
+			//
+			System.out.println("Creating Product button pushed");
 		}
     }
 }

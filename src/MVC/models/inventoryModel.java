@@ -43,8 +43,8 @@ public class inventoryModel {
 	public ArrayList<String> unitList = new ArrayList();
 	public ArrayList<String> parts = new ArrayList();
 	public addPartModel testPart;
-	public gatewaySQL gateway = new gatewaySQL("ymd524", "ymd524", "HRqEF9KWp7MFw04SR0zZ");
-	//public gatewaySQL gateway = new gatewaySQL("lop343", "lop343", "dragon91z");
+	//public gatewaySQL gateway = new gatewaySQL("ymd524", "ymd524", "HRqEF9KWp7MFw04SR0zZ");
+	public gatewaySQL gateway = new gatewaySQL("lop343", "lop343", "dragon91z");
 	public String[] locationsArray;
 	public String[] partsArray;
 	public inventoryModel(){
@@ -168,7 +168,7 @@ public class inventoryModel {
 		currentObject2 = null;
 		setCurrentObject2(currentObject2);
 		
-		invView.registerListeners(invController, menuController);
+		invView.registerListeners(invController, menuController, menuController);
 		invView.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		invView.setSize(400, 300);
 		invView.setLocation(400, 0);

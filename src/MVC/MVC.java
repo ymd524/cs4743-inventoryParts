@@ -39,7 +39,7 @@ public class MVC {
 			partView.setSize(400, 300);
 			partView.setVisible(true);		
 			
-			inventoryView.registerListeners(inventoryController, menuController);//register controllers as listeners
+			inventoryView.registerListeners(inventoryController, menuController, menuController);//register controllers as listeners
 			inventoryView.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//starts up inventoryView
 			inventoryView.setSize(400, 300);
 			inventoryView.setLocation(400, 0);
@@ -48,7 +48,7 @@ public class MVC {
 			tempView.registerListeners(tempController);
 			tempView.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//starts up inventoryView
 			tempView.setSize(400,300);
-			tempView.setLocation(400,0);
+			tempView.setLocation(0,300);
 			tempView.setVisible(true);
 		
 		}

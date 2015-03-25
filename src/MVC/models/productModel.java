@@ -11,7 +11,8 @@ import MVC.views.productsViews.productErrorView;
 import MVC.views.productsViews.productPartsListView;
 
 public class productModel {
-	public productGatewaySQL gateway = new productGatewaySQL("ymd524", "ymd524", "HRqEF9KWp7MFw04SR0zZ");
+	//public productGatewaySQL gateway = new productGatewaySQL("ymd524", "ymd524", "HRqEF9KWp7MFw04SR0zZ");
+	public productGatewaySQL gateway = new productGatewaySQL("lop343", "lop343", "dragon91z");
 	public productPartsListView view;
 	public ArrayList<String> productArrayList = new ArrayList();
 	public ArrayList<String> productPartsArrayList = new ArrayList();
