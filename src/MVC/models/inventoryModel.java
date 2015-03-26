@@ -24,6 +24,7 @@ public class inventoryModel {
 	private showInventoryController invController;
 	private menuController menuController;
 	private showPartsController controller;
+	private productModel proModel;
 	private int currentId = 0;
 	private String[] errorArray = new String[10];
 	private int flag = 0;
@@ -147,7 +148,8 @@ public class inventoryModel {
 	public void resetList(){
 
 		showView.removeList();//close showPartsView
-		showView = new showPartsView(this); /*create new showPartsView*/
+		proModel = showView.getproModel();
+		showView = new showPartsView(this, proModel); /*create new showPartsView*/
 		controller = showView.getController();
 		menuController = showView.getMenuController();
 		currentObject=null;
@@ -155,7 +157,7 @@ public class inventoryModel {
 		showView.registerListeners(controller, menuController);	//register other controllers as listeners 
 		showView.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);/* start up new showPartsview */
 		showView.setSize(400, 300);
-		showView.setVisible(true);			
+		showView.setVisible(true);
 	}
 	
 	public void resetInv(){

@@ -5,8 +5,10 @@ import java.awt.event.*;
 import javax.swing.JFrame;
 
 import MVC.models.inventoryModel;
+import MVC.models.productModel;
 import MVC.views.addInvsView;
 import MVC.views.addPartsView;
+import MVC.views.cProductView;
 import MVC.views.showPartsView;
 
 public class menuController implements ActionListener{
@@ -15,10 +17,13 @@ public class menuController implements ActionListener{
 	private showPartsView view;
 	private addPartsView addView;
 	private addInvsView addinvView;
+	private cProductView cProductView;
+	private productModel proModel;
 	
-	public menuController(inventoryModel model, showPartsView view){
+	public menuController(inventoryModel model, showPartsView view, productModel proModel){
 		this.model = model;
 		this.view = view;
+		this.proModel = proModel;
 	}
 	
 	@Override
@@ -39,8 +44,11 @@ public class menuController implements ActionListener{
 			addinvView.setVisible(true);
 			//System.out.println("menuController = " +command);
 		} else if (command.equals("Create Product")) {
-			//
-			System.out.println("Creating Product button pushed");
+			//System.out.println("Creating Product button pushed");
+			cProductView = new cProductView(model, proModel);
+			
+			cProductView.setSize(400, 300);
+			cProductView.setVisible(true);
 		}
     }
 }

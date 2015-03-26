@@ -1,8 +1,6 @@
 package MVC;
 
-import java.awt.event.
-*
-;
+import java.awt.event.*;
 import javax.swing.JFrame;
 
 import MVC.controllers.menuController;
@@ -22,17 +20,17 @@ import MVC.views.productsViews.showTemplatesView;
 public class MVC {
 	
 
-		public static void main(String[] args) {	
+		public static void main(String[] args) {
 			
 			inventoryModel model = new inventoryModel();/* create new model, view and controller */
 			productModel proModel = new productModel();
-			showPartsView partView = new showPartsView(model);
+			showPartsView partView = new showPartsView(model, proModel);
 			showTemplatesView tempView = new showTemplatesView(proModel);
 			inventoryListView inventoryView = new inventoryListView(model);
 			showInventoryController inventoryController = new showInventoryController(inventoryView, model);
 			showPartsController controller = new showPartsController(partView, model);
 			showTemplatesController tempController = new showTemplatesController(tempView, proModel);
-			menuController menuController = new menuController(model, partView);
+			menuController menuController = new menuController(model, partView, proModel);
 			
 			partView.registerListeners(controller, menuController);//register controllers as listeners
 			partView.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//starts up showPartsView

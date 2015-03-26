@@ -11,9 +11,10 @@ import javax.swing.event.*;
 import MVC.controllers.menuController;
 import MVC.controllers.showPartsController;
 import MVC.models.inventoryModel;
+import MVC.models.productModel;
 
 public class showPartsView extends JFrame{
-	
+	private productModel proModel;
 	private inventoryModel model;
 	private JList list;
 	private JButton addButton = new JButton("Add new part");
@@ -22,12 +23,12 @@ public class showPartsView extends JFrame{
 	private showPartsController controller;
 	private menuController menuController;
 	
-	
-	public showPartsView (inventoryModel model){
+	public showPartsView (inventoryModel model, productModel proModel){
 		super("Parts List");
 		this.model = model;
+		this.proModel = proModel;
 		controller = new showPartsController(this, this.model);
-		menuController = new menuController(this.model, this);
+		menuController = new menuController(this.model, this, this.proModel);
 		model.setShowView(this);//sets current instance of view in inventoryModel
 		model.getPartsList();
 		addList();//creates and adds JList to jframe with current arrayList values
@@ -86,5 +87,7 @@ public class showPartsView extends JFrame{
 	public String getSelectedValue() {
 		return list.getSelectedValue().toString();
 	}
-
+	public productModel getproModel() {
+		return proModel;
+	}
 }
