@@ -206,4 +206,5 @@ public class productGatewaySQL {
 		}
 		return rs;
 	}
+
 }

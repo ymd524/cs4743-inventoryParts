@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import MVC.controllers.addInvController;
+import MVC.controllers.productController;
 import MVC.models.inventoryModel;
 import MVC.models.productModel;
 
@@ -21,40 +22,33 @@ public class cProductView extends JFrame {
 	private JPanel buttonPanel = new JPanel();
 	private JLabel locLabel = new JLabel("Location: ");
 	private JLabel pLabel = new JLabel("Product: ");
-		
 	private JButton addButton = new JButton("Create Product");
 	private JButton cancelButton = new JButton("Cancel");
 	private JComboBox combo1;
 	private JComboBox combo2;
-	
 	private ArrayList<String> loclist = new ArrayList();
 	private String[] locations;
 	private ArrayList<String> productlist = new ArrayList();
 	private String[] products;
 	
-	
 	public cProductView(inventoryModel model, productModel proModel) {
+		super("Create Product");
 		// TODO Auto-generated constructor stub
 		this.model =  model;
 		this.proModel = proModel;
 		GridLayout grid = new GridLayout(3,2);
 		
 		loclist = model.getLocationsArray();
-		//System.out.println("combo2 = "+loclist.toString());
 		locations = new String[loclist.size()];
 		locations = loclist.toArray(locations);
 		combo1 = new JComboBox(locations);
 		
-		productlist = proModel.getAllProducts();
+		productlist = proModel.getProductsDescription();
 		products = new String[productlist.size()];
+		//productlist.toString();
+		//System.out.println("Arraylist =" +productlist.get(0));
 		products = productlist.toArray(products);
 		combo2 = new JComboBox(products);
-		//model.getPartsList();
-		//partlist = model.getNameArray();
-		//System.out.println("combo1 = "+partlist.toString());
-		//parts = new String[partlist.size()];
-		//parts = partlist.toArray(parts);
-		//combo1 = new JComboBox(parts);
 		
 		this.setLayout(grid);;		
 		
@@ -68,10 +62,10 @@ public class cProductView extends JFrame {
 		this.add(cancelButton);
 	}
 
-	public void registerListeners(addInvController addInvController) {
+	public void registerListeners(productController pController) {
 		// TODO Auto-generated method stub
-		cancelButton.addActionListener(addInvController);
-		addButton.addActionListener(addInvController);
+		cancelButton.addActionListener(pController);
+		addButton.addActionListener(pController);
 	}
 	
 	public void closeWindow (){

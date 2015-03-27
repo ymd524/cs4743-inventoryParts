@@ -18,13 +18,16 @@ public class productModel {
 	public ArrayList<String> productPartsArrayList = new ArrayList();
 	public ArrayList<String> nameArrayList = new ArrayList();
 	public ArrayList<Integer> productPartIdsList = new ArrayList();
+	public ArrayList<String> productD = new ArrayList();
 	public productErrorView errorView;
 	public ResultSet results;
+	public ResultSet results2;
 	public String listText;
 	public String productNum;
 	public String productDesc;
 	public String quantity;
 	public String currentNum = null;
+	public String proDesc;
 	public int partId;
 	public int id;
 	public int q;
@@ -234,6 +237,7 @@ public class productModel {
 	
 	public ArrayList<String> getAllProducts(){
 		results = null;
+		productArrayList.clear();
 		try{
 			results = gateway.getAllProducts();
 			productNum = results.getString("productNum");
@@ -268,6 +272,21 @@ public class productModel {
 			throw new RuntimeException(e.getMessage());
 		}
 		return nameArrayList;
+	}
+	
+	public ArrayList<String> getProductsDescription(){
+		results2 = null;
+		productD.clear();
+		try{
+			results2 = gateway.getAllProducts();
+			productD.add(results2.getString("productDesc"));
+			while(results2.next()){
+				productD.add(results2.getString("productDesc"));
+			}
+		}catch(SQLException e){
+			throw new RuntimeException(e.getMessage());
+		}
+		return productD;
 	}
 	
 	public void addPartToProduct(String name, int q){
@@ -338,6 +357,18 @@ public class productModel {
 		return id;
 	}
 	
+	public int getProductId(String number) {
+		int id=0;
+		try{
+			results = gateway.getProductByNum(number);
+			id = results.getInt("id");
+		}catch(SQLException e){
+			throw new RuntimeException(e.getMessage());
+		}
+		return id;
+	}
+	
+	
 	/*gets and assigns values of currentObject*/
 	
 	public ArrayList getProductArray(){
@@ -347,6 +378,10 @@ public class productModel {
 	public ArrayList getProductPartsArray(){
 		return productPartsArrayList;
 	}
+	public ArrayList getProductDescArray() {
+		return productD;
+	}
+	
 	public String getProductNumber(){
 		return productNum;
 	}

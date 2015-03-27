@@ -18,6 +18,7 @@ public class menuController implements ActionListener{
 	private addPartsView addView;
 	private addInvsView addinvView;
 	private cProductView cProductView;
+	private productController pController;
 	private productModel proModel;
 	
 	public menuController(inventoryModel model, showPartsView view, productModel proModel){
@@ -46,8 +47,10 @@ public class menuController implements ActionListener{
 		} else if (command.equals("Create Product")) {
 			//System.out.println("Creating Product button pushed");
 			cProductView = new cProductView(model, proModel);
-			
-			cProductView.setSize(400, 300);
+			productController pController = new productController(model, proModel, cProductView);
+			cProductView.registerListeners(pController);
+			cProductView.setSize(500, 200);
+			cProductView.setLocation(400, 300);
 			cProductView.setVisible(true);
 		}
     }

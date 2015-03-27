@@ -37,6 +37,7 @@ public class addInvsView extends JFrame {
 	
 	
 	public addInvsView(inventoryModel model) {
+		super("Add Inventory Item");
 		// TODO Auto-generated constructor stub
 		this.model =  model;
 		GridLayout grid = new GridLayout(6,7);
