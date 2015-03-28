@@ -368,6 +368,16 @@ public class productModel {
 		return id;
 	}
 	
+	public int getProductIdByDesc(String desc) {
+		int id=0;
+		try{
+			results = gateway.getProductByDesc(desc);
+			id = results.getInt("id");
+		}catch(SQLException e){
+			throw new RuntimeException(e.getMessage());
+		}
+		return id;
+	}
 	
 	/*gets and assigns values of currentObject*/
 	

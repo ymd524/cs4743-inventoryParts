@@ -9,6 +9,7 @@ import java.util.Date;
 import javax.swing.JFrame;
 import javax.swing.JList;
 
+import MVC.controllers.invMenuController;
 import MVC.controllers.menuController;
 import MVC.controllers.showInventoryController;
 import MVC.controllers.showPartsController;
@@ -23,6 +24,7 @@ public class inventoryModel {
 	private inventoryListView invView;
 	private showInventoryController invController;
 	private menuController menuController;
+	private invMenuController menuController2;
 	private showPartsController controller;
 	private productModel proModel;
 	private int currentId = 0;
@@ -163,14 +165,14 @@ public class inventoryModel {
 	public void resetInv(){
 
 		invView.removeListInv();
-		invView = new inventoryListView(this); 
+		invView = new inventoryListView(this);
 		invController = invView.getController();
-		menuController = invView.getMenuController();
+		menuController2 = invView.getMenuController();
 		
 		currentObject2 = null;
 		setCurrentObject2(currentObject2);
 		
-		invView.registerListeners(invController, menuController, menuController);
+		invView.registerListeners(invController, menuController2);
 		invView.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		invView.setSize(400, 300);
 		invView.setLocation(400, 0);

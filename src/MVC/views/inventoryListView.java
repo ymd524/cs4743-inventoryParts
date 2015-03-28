@@ -13,6 +13,7 @@ import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionListener;
 
+import MVC.controllers.invMenuController;
 import MVC.controllers.menuController;
 import MVC.controllers.showInvListController;
 import MVC.controllers.showInventoryController;
@@ -20,9 +21,11 @@ import MVC.controllers.showPartsController;
 import MVC.models.addPartModel;
 import MVC.models.inventoryItem;
 import MVC.models.inventoryModel;
+import MVC.models.productModel;
 
 public class inventoryListView extends JFrame {
 	private inventoryModel model;
+	private productModel proModel;
 	private JList list;
 	private JButton addButton = new JButton("Add New Inventory Item");
 	private JButton createProduct = new JButton("Create Product");
@@ -31,13 +34,15 @@ public class inventoryListView extends JFrame {
 	private String[] parts;
 	private String[] locations;
 	private showInventoryController controller1;
-	private menuController controller2;
-	private menuController controller3;
+	private invMenuController controller2;
+	//private menuController controller3;
 	public inventoryListView(inventoryModel model){
 		super("Inventory List");
 		this.model = model;
+		//this.proModel = proModel;
+		
 		controller1 = new showInventoryController(this, this.model);
-		//controller2 = new menuController(this.model, this);
+		controller2 = new invMenuController(this.model, this, proModel);
 		
 		model.setInvView(this);
 		//delete part entry and Inventory item entry
@@ -63,11 +68,12 @@ public class inventoryListView extends JFrame {
 		this.add(subPanel, BorderLayout.SOUTH);
 	}
 	
-	public void registerListeners(showInventoryController controller1, menuController controller2, 
-			menuController controller3) {
+	public void registerListeners(showInventoryController controller1,
+			invMenuController menuController2) {
 		list.addListSelectionListener(controller1);
-		addButton.addActionListener(controller2);
-		createProduct.addActionListener(controller3);
+		//addButton.addActionListener(controller2);
+		addButton.addActionListener(menuController2);
+		createProduct.addActionListener(menuController2);
 	}
 	
 	public String getSelectedValue() {
@@ -82,10 +88,7 @@ public class inventoryListView extends JFrame {
 		return controller1;
 	}
 	
-	public menuController getMenuController(){
+	public invMenuController getMenuController(){
 		return controller2;
-	}
-	public menuController getMenuController3(){
-		return controller3;
 	}
 }

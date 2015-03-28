@@ -206,5 +206,17 @@ public class productGatewaySQL {
 		}
 		return rs;
 	}
-
+	
+	public ResultSet getProductByDesc(String desc){
+		PreparedStatement stmt = null;
+		try{
+			stmt = conn.prepareStatement("SELECT * FROM products WHERE productDesc = ?");
+	        stmt.setString(1, desc);
+			rs = stmt.executeQuery();
+			rs.first();
+		} catch(SQLException e){
+			e.printStackTrace();
+		}
+		return rs;
+	}
 }

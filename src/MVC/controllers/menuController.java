@@ -16,15 +16,15 @@ public class menuController implements ActionListener{
 	private inventoryModel model;
 	private showPartsView view;
 	private addPartsView addView;
-	private addInvsView addinvView;
-	private cProductView cProductView;
-	private productController pController;
-	private productModel proModel;
+	//private addInvsView addinvView;
+	//private cProductView cProductView;
+	//private productController pController;
+	//private productModel proModel;
 	
 	public menuController(inventoryModel model, showPartsView view, productModel proModel){
 		this.model = model;
 		this.view = view;
-		this.proModel = proModel;
+		//this.proModel = proModel;
 	}
 	
 	@Override
@@ -37,7 +37,7 @@ public class menuController implements ActionListener{
 			addView.setSize(400, 300);/* starts new addPartView*/
 			addView.setVisible(true);
 			//System.out.println("menuController = " +command);
-		} else if (command.equals("Add New Inventory Item")) {
+		} /*else if (command.equals("Add New Inventory Item")) {
 			addinvView = new addInvsView(model);
 			addInvController addInvController = new addInvController(model, addinvView);
 			addinvView.registerListeners(addInvController);
@@ -52,6 +52,6 @@ public class menuController implements ActionListener{
 			cProductView.setSize(500, 200);
 			cProductView.setLocation(400, 300);
 			cProductView.setVisible(true);
-		}
+		}*/
     }
 }

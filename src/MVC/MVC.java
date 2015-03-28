@@ -1,8 +1,10 @@
 package MVC;
 
 import java.awt.event.*;
+
 import javax.swing.JFrame;
 
+import MVC.controllers.invMenuController;
 import MVC.controllers.menuController;
 import MVC.controllers.showInventoryController;
 import MVC.controllers.showPartsController;
@@ -31,13 +33,14 @@ public class MVC {
 			showPartsController controller = new showPartsController(partView, model);
 			showTemplatesController tempController = new showTemplatesController(tempView, proModel);
 			menuController menuController = new menuController(model, partView, proModel);
+			invMenuController menuController2 = new invMenuController(model, inventoryView, proModel);
 			
 			partView.registerListeners(controller, menuController);//register controllers as listeners
 			partView.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//starts up showPartsView
 			partView.setSize(400, 300);
 			partView.setVisible(true);		
 			
-			inventoryView.registerListeners(inventoryController, menuController, menuController);//register controllers as listeners
+			inventoryView.registerListeners(inventoryController, menuController2);//register controllers as listeners
 			inventoryView.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//starts up inventoryView
 			inventoryView.setSize(400, 300);
 			inventoryView.setLocation(400, 0);

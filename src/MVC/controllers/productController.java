@@ -33,7 +33,7 @@ public class productController implements ActionListener {
 			String location = view.getLoc();
 			System.out.println("product = " +product+ ", loccation = " +location);
 			
-			int productId = proModel.getProductId(product);
+			int productId = proModel.getProductIdByDesc(product);
 			System.out.println("productID = " +productId);
 			model.checkLoc(location);
 			//model.checkPL(name, loc);
@@ -49,7 +49,6 @@ public class productController implements ActionListener {
 				errorView.setSize(400, 300);
 				errorView.setVisible(true);
 			}
-		}
-		
+		}	
 	}
 }
