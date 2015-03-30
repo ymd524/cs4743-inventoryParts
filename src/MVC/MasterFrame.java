@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+
 import javax.swing.JButton;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
@@ -18,6 +19,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import MVC.views.productsViews.showTemplatesView;
+
 /*
  * MasterFrame : a little MDI skeleton that has communication from child to JInternalFrame 
  * 					and from child to the top-level JFrame (MasterFrame)  
@@ -26,7 +29,6 @@ public class MasterFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JDesktopPane desktop;
 	private int newFrameX = 0, newFrameY = 0; //used to cascade or stagger starting x,y of JInternalFrames
-	
 	public MasterFrame(String title) {
 		super(title);
 		
@@ -42,30 +44,7 @@ public class MasterFrame extends JFrame {
 		});
 		menu.add(menuItem);
 		menuBar.add(menu);
-		
-		menu = new JMenu("Parts");
-		menuItem = new JMenuItem("Show Parts");
-		menuItem.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				ChildPanel child = new ChildPanel(MasterFrame.this);
-				openMDIChild(child);
-			}
-		});
-		menu.add(menuItem);
-		menuBar.add(menu);
-		
-		menu = new JMenu("Inventory");
-		menuItem = new JMenuItem("Show Inventory");
-		menuItem.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				ChildPanel child = new ChildPanel(MasterFrame.this);
-				openMDIChild(child);
-			}
-		});
-		menu.add(menuItem);
-		menuBar.add(menu);
+
 		
 		menu = new JMenu("Products");
 		menuItem = new JMenuItem("Show Templates");
@@ -106,7 +85,7 @@ public class MasterFrame extends JFrame {
 	
 	//creates and displays the JFrame
 	public static void createAndShowGUI() {
-		MasterFrame frame = new MasterFrame("MDI Skeleton");
+		MasterFrame frame = new MasterFrame("Cabinetron");
 		frame.setSize(600, 400);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		
 		frame.setVisible(true);
@@ -121,67 +100,5 @@ public class MasterFrame extends JFrame {
         });
 	}
 
-	//ChildPanel : the GUI stuff that will display the inner frames
-	//				all it does is update its title when you press the button (wow)
-	private class ChildPanel extends JPanel {
-		private static final long serialVersionUID = 1L;
-		private MasterFrame master;//container of inner frame parent
-		private int counter = 0;//used for inner frame title
-		private String myTitle;
-		JButton button;
-		
-		public ChildPanel(MasterFrame m) {
-			master = m;
-			
-			this.setLayout(new BorderLayout());
-			
-			button = new JButton("Increment Title");
-			button.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					//update title
-					incrementTitle();
-					//tell master to display a message
-					master.displayChildMessage("Child title changed to " + myTitle);
-				}
-			});
-			
-			JPanel emptyPanel = new JPanel();
-			emptyPanel.add(new JLabel(""));
-			this.add(emptyPanel, BorderLayout.CENTER);
-			this.add(button, BorderLayout.SOUTH);
-			
-			//give panel some room (pack makes things kind of cramped)
-			this.setPreferredSize(new Dimension(300, 300));
-			
-			incrementTitle();
-		}
-		
-		//set the title of the containing JInternalFrame
-		private void setInternalFrameTitle(String t) {
-			Container parent = this;
-			//get climbing parent hierarchy until we find the JInnerFrame
-			while(!(parent instanceof JInternalFrame) && parent != null) 
-	            parent = parent.getParent();
-			if(parent != null)
-				((JInternalFrame) parent).setTitle(t);
-		}
-		
-		//
-		private void incrementTitle() {
-			myTitle = "Title Counter: " + counter;
-			//update my title using getParent
-			button.setText("Increment Title to " + counter);
-			counter++;
-			//use getParent to find JInternalFrame container and set its title
-			setInternalFrameTitle(myTitle);
-		}
-		
-		//useful for JInternalFrame starting with the child panel's title
-		//child panel is instantiated before the JInternalFrame
-		//so JInternalFrame calls this method to set its own title when it is created 
-		public String getTitle() {
-			return myTitle;
-		}
-	}
+
 }

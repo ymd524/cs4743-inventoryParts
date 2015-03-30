@@ -7,10 +7,12 @@ import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
+import MVC.MasterFrame;
 import MVC.controllers.addPartController;
 import MVC.controllers.menuController;
 import MVC.controllers.showPartsController;
@@ -19,8 +21,8 @@ import MVC.controllers.productControllers.showTemplatesController;
 import MVC.models.inventoryModel;
 import MVC.models.productModel;
 
-public class showTemplatesView extends JFrame {
-	private productModel model;
+public class showTemplatesView extends JInternalFrame {
+	private MasterFrame model;
 	private showTemplatesController controller;
 	private JList list;
 	private JButton addButton = new JButton("Add Product Template");
@@ -29,14 +31,14 @@ public class showTemplatesView extends JFrame {
 	private menuController menuController;
 	private addProductsView addView;
 	
-	public showTemplatesView (productModel model){
+	public showTemplatesView (MasterFrame model){
 		super("Products List");
 		this.model = model;
 		addList();//creates and adds JList to jframe with current arrayList values
 		}
 		
 		public void addList(){
-			productArray=model.getAllProducts();//gets ArrayList of names
+			//productArray=model.getAllProducts();//gets ArrayList of names
 			products = new String[productArray.size()];//creates new String array the size of ArrayList namesArray
 			products = productArray.toArray(products);//assigns values from arrayList to array
 			
@@ -56,9 +58,9 @@ public class showTemplatesView extends JFrame {
 				public void actionPerformed(ActionEvent e)
 				{
 
-					addView = new addProductsView(model);//creates addPartsView
-					addProductController addController = new addProductController(model, addView);//creates addPartController
-					addView.registerListeners(addController);//register addPartController as listener
+				//	addView = new addProductsView(model);//creates addPartsView
+					//addProductController addController = new addProductController(model, addView);//creates addPartController
+					//addView.registerListeners(addController);//register addPartController as listener
 					addView.setSize(400, 300);/* starts new addPartView*/
 					addView.setVisible(true);
 				}
