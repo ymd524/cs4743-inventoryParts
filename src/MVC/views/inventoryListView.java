@@ -36,15 +36,16 @@ public class inventoryListView extends JFrame {
 	private showInventoryController controller1;
 	private invMenuController controller2;
 	//private menuController controller3;
-	public inventoryListView(inventoryModel model){
+	public inventoryListView(inventoryModel model, productModel proModel){
 		super("Inventory List");
 		this.model = model;
-		//this.proModel = proModel;
+		this.proModel = proModel;
 		
-		controller1 = new showInventoryController(this, this.model);
-		controller2 = new invMenuController(this.model, this, proModel);
+		controller1 = new showInventoryController(this, this.model, this.proModel);
+		controller2 = new invMenuController(this.model, this, this.proModel);
 		
 		model.setInvView(this);
+		model.setProductModel(proModel);//works with resetting inventoryListView
 		//delete part entry and Inventory item entry
 		addList();
 	}

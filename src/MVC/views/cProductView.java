@@ -8,9 +8,6 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
-
-import MVC.controllers.addInvController;
 import MVC.controllers.productController;
 import MVC.models.inventoryModel;
 import MVC.models.productModel;
@@ -43,10 +40,11 @@ public class cProductView extends JFrame {
 		locations = loclist.toArray(locations);
 		combo1 = new JComboBox(locations);
 		
-		productlist = proModel.getProductsDescription();
+		//System.out.println("set 1");
+		proModel.getProductsDescription();
+		productlist = proModel.getProductDescArray();
+		//System.out.println("set 2");
 		products = new String[productlist.size()];
-		//productlist.toString();
-		//System.out.println("Arraylist =" +productlist.get(0));
 		products = productlist.toArray(products);
 		combo2 = new JComboBox(products);
 		

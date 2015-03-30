@@ -2,13 +2,8 @@ package MVC.controllers;
 
 import java.awt.event.*;
 
-import javax.swing.JFrame;
-
 import MVC.models.inventoryModel;
-import MVC.models.productModel;
-import MVC.views.addInvsView;
 import MVC.views.addPartsView;
-import MVC.views.cProductView;
 import MVC.views.showPartsView;
 
 public class menuController implements ActionListener{
@@ -21,7 +16,7 @@ public class menuController implements ActionListener{
 	//private productController pController;
 	//private productModel proModel;
 	
-	public menuController(inventoryModel model, showPartsView view, productModel proModel){
+	public menuController(inventoryModel model, showPartsView view){
 		this.model = model;
 		this.view = view;
 		//this.proModel = proModel;

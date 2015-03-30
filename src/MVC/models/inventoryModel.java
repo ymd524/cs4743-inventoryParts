@@ -30,6 +30,7 @@ public class inventoryModel {
 	private int currentId = 0;
 	private String[] errorArray = new String[10];
 	private int flag = 0;
+	private int pFlag = 0;
 	private int arrayIndex = 0;
 	private int nameIndex = 0;
 	private int id = 1;
@@ -45,6 +46,7 @@ public class inventoryModel {
 	public ArrayList<String> itemArray = new ArrayList();
 	public ArrayList<String> unitList = new ArrayList();
 	public ArrayList<String> parts = new ArrayList();
+	public ArrayList<String> products = new ArrayList();
 	public addPartModel testPart;
 	//public gatewaySQL gateway = new gatewaySQL("ymd524", "ymd524", "HRqEF9KWp7MFw04SR0zZ");
 	public gatewaySQL gateway = new gatewaySQL("lop343", "lop343", "dragon91z");
@@ -87,6 +89,12 @@ public class inventoryModel {
 		gateway.addInventoryItem(partId, locationId, quantity);
 		//inventoryItem = new inventoryItem(part, location, quantity);
 		//inventoryList.add(inventoryItem);
+	}
+	
+	public void addProduct(int productId, String location){
+		String locationstr = gateway.getLocationByName(location);
+		int locationId = Integer.parseInt(locationstr);
+		gateway.addProductItem(productId, locationId);
 	}
 	
 	/*
@@ -165,7 +173,7 @@ public class inventoryModel {
 	public void resetInv(){
 
 		invView.removeListInv();
-		invView = new inventoryListView(this);
+		invView = new inventoryListView(this, proModel);
 		invController = invView.getController();
 		menuController2 = invView.getMenuController();
 		
@@ -195,12 +203,30 @@ public class inventoryModel {
 		this.invView = invView;
 	}
 	
+	public void setProductModel(productModel proModel) {
+		this.proModel = proModel;
+	}
+	
 	public void setCurrentObject(addPartModel currObject){
 		currentObject = currObject;
 	}
 	public void setCurrentObject2(inventoryItem currObject2){
 		currentObject2 = currObject2;
 	}
+	
+	
+	public void searchForProduct() {
+		pFlag = 1;
+	}
+	
+	public int getProductFlag() {
+		return pFlag;
+	}
+	
+	public void resetSearch() {
+		pFlag = 0;
+	}
+	
 	public void setFlag(int i){
 		flag = i;
 	}
@@ -389,6 +415,28 @@ public class inventoryModel {
 		return locations;
 	}
 	
+	public ArrayList<String> getProductsArray(String location){
+		results = null;
+		products.clear();
+		String id = null;
+		try{
+			id = gateway.getLocationByName(location);
+			int locId = Integer.parseInt(id);
+			results = gateway.getAllProducts(locId);
+			//results.first();
+			while(results.next()){
+				if (results.getString("productId").equals("0")) {
+				    //System.out.println("productId is zero");
+					continue;
+				}
+				products.add(results.getString("productId"));
+			}
+		}catch(SQLException e){
+			throw new RuntimeException(e.getMessage());
+		}
+		return products;
+	}
+	
 	public ArrayList<String> getNameArray(){
 		return nameArray;
 	}
@@ -450,6 +498,14 @@ public class inventoryModel {
 		}
 	}
 	
+	public int getLocationId(String location) {
+		String str = null;
+		int id =0;
+		str = gateway.getLocationByName(location);
+		id = Integer.parseInt(str);
+		return id;
+	}
+	
 	public String[] getLocations(){
 		return locationsArray;
 	}
@@ -470,6 +526,7 @@ public class inventoryModel {
 		String str, restr = null;
 		ArrayList<Integer> arl = new ArrayList<Integer>();
 		arl.clear();
+		parts.clear();
 		int count=0;
 		
 		str = gateway.getLocationByName(name);
@@ -477,12 +534,17 @@ public class inventoryModel {
 		try {
 			arl.add(results.getInt("partId"));
 			while(results.next()){
+				if (results.getInt("partId") == 0) {
+					searchForProduct();
+					continue;
+				}
 				arl.add(results.getInt("partId"));
 			}
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+
 		while (count < arl.size()) {
 			results = gateway.getPartName(arl.get(count++));
 			try {
@@ -658,4 +720,53 @@ public class inventoryModel {
 		}
 	}
 	
+	public void checkCreation(ArrayList<String> parts, ArrayList<String> partsList) {
+		// TODO Auto-generated method stub
+		int count=0;
+		String error = null;
+		//System.out.println("method check partsList = " +partsList.toString());
+		//System.out.println("method check parts = " +parts.toString());
+		for (String tmp : partsList) {//product parts
+			for (String tmp2 : parts) {//parts at that location
+				if (tmp.equals(tmp2)) {
+					count++;
+					//System.out.println("Match = " +tmp+ " and " +tmp2);
+				}
+			}
+		}
+		if (count != partsList.size()) {
+			setFlag(1);
+			error = "Not enough parts to create product at location";
+			setError(error);
+		}
+		
+	}
+	
+	public int checkProductQ(String name) {
+		int val = 0;
+		for(int i=0; i<parts.size();i++){
+			if(parts.get(i).equals(name)){
+				val = 1;
+			}
+		}
+		return val;
+	}
+	
+	public void updateProductQ(String name, int productId) {
+		for(int i=0; i<parts.size();i++){
+			if(parts.get(i).equals(name)){
+				results3 = gateway.getProduct(productId);
+				try {
+					int q = results3.getInt("quantity");
+					gateway.updateProductQ(q+1, productId);
+					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				
+			}
+		}
+	}
 }

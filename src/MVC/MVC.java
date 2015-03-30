@@ -28,11 +28,11 @@ public class MVC {
 			productModel proModel = new productModel();
 			showPartsView partView = new showPartsView(model, proModel);
 			showTemplatesView tempView = new showTemplatesView(proModel);
-			inventoryListView inventoryView = new inventoryListView(model);
-			showInventoryController inventoryController = new showInventoryController(inventoryView, model);
+			inventoryListView inventoryView = new inventoryListView(model, proModel);
+			showInventoryController inventoryController = new showInventoryController(inventoryView, model, proModel);
 			showPartsController controller = new showPartsController(partView, model);
 			showTemplatesController tempController = new showTemplatesController(tempView, proModel);
-			menuController menuController = new menuController(model, partView, proModel);
+			menuController menuController = new menuController(model, partView);
 			invMenuController menuController2 = new invMenuController(model, inventoryView, proModel);
 			
 			partView.registerListeners(controller, menuController);//register controllers as listeners

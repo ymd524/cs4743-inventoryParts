@@ -230,6 +230,22 @@ public class productModel {
 		return productPartsArrayList;
 	}
 	
+	/*public ArrayList<Integer> getAllProductPartIds(){
+		results = null;
+		productPartIdsList.clear();
+		try{
+			results = gateway.getAllProductParts(id);
+			partId = results.getInt("partId");
+			productPartIdsList.add(partId);
+			while(results.next()){
+				partId = results.getInt("partId");
+				productPartIdsList.add(partId);
+			}
+		}catch(SQLException e){
+			throw new RuntimeException(e.getMessage());
+		}
+		return productPartIdsList;
+	}*/
 	public void closeView(productPartsListView view){
 		this.view = view;
 		this.view.closeWindow();
@@ -274,9 +290,10 @@ public class productModel {
 		return nameArrayList;
 	}
 	
-	public ArrayList<String> getProductsDescription(){
+	public void getProductsDescription(){
 		results2 = null;
-		productD.clear();
+		//productD.clear();
+		productD = new ArrayList();
 		try{
 			results2 = gateway.getAllProducts();
 			productD.add(results2.getString("productDesc"));
@@ -286,7 +303,7 @@ public class productModel {
 		}catch(SQLException e){
 			throw new RuntimeException(e.getMessage());
 		}
-		return productD;
+		//return productD;
 	}
 	
 	public void addPartToProduct(String name, int q){
@@ -379,6 +396,11 @@ public class productModel {
 		return id;
 	}
 	
+	public String getProductDescById(int id) {
+		String str = gateway.getProductByDesc(id);
+		return str;
+	}
+	
 	/*gets and assigns values of currentObject*/
 	
 	public ArrayList getProductArray(){
@@ -413,6 +435,4 @@ public class productModel {
 		return this.id;
 	}
 	
-	
-
 }

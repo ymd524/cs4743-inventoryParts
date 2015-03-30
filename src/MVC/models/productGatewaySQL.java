@@ -116,7 +116,22 @@ public class productGatewaySQL {
 		
 		return num;
 	}
-
+	
+	public String getPartLocationById(int id){
+		PreparedStatement stmt = null;
+		String num = null;
+		try{
+			stmt = conn.prepareStatement("Select * FROM parts WHERE id = ?");
+			stmt.setInt(1, id);
+			rs = stmt.executeQuery();
+			rs.first();
+			num = rs.getString("partName");
+		} catch(SQLException e){
+			e.printStackTrace();
+		}
+		
+		return num;
+	}
 	
 
 	public ResultSet getAllProductParts(int id){
@@ -219,4 +234,20 @@ public class productGatewaySQL {
 		}
 		return rs;
 	}
+	
+	public String getProductByDesc(int id){
+		PreparedStatement stmt = null;
+		String str = null;
+		try{
+			stmt = conn.prepareStatement("SELECT productDesc FROM products WHERE id = ?");
+	        stmt.setInt(1, id);
+			rs = stmt.executeQuery();
+			rs.first();
+			str = rs.getString("productDesc");
+		} catch(SQLException e){
+			e.printStackTrace();
+		}
+		return str;
+	}
+	
 }
