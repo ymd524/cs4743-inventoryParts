@@ -11,19 +11,23 @@ import MVC.views.productsViews.productErrorView;
 import MVC.views.productsViews.productPartsListView;
 
 public class productModel {
-	public productGatewaySQL gateway = new productGatewaySQL("ymd524", "ymd524", "HRqEF9KWp7MFw04SR0zZ");
+	//public productGatewaySQL gateway = new productGatewaySQL("ymd524", "ymd524", "HRqEF9KWp7MFw04SR0zZ");
+	public productGatewaySQL gateway = new productGatewaySQL("lop343", "lop343", "dragon91z");
 	public productPartsListView view;
 	public ArrayList<String> productArrayList = new ArrayList();
 	public ArrayList<String> productPartsArrayList = new ArrayList();
 	public ArrayList<String> nameArrayList = new ArrayList();
 	public ArrayList<Integer> productPartIdsList = new ArrayList();
+	public ArrayList<String> productD = new ArrayList();
 	public productErrorView errorView;
 	public ResultSet results;
+	public ResultSet results2;
 	public String listText;
 	public String productNum;
 	public String productDesc;
 	public String quantity;
 	public String currentNum = null;
+	public String proDesc;
 	public int partId;
 	public int id;
 	public int q;
@@ -226,6 +230,22 @@ public class productModel {
 		return productPartsArrayList;
 	}
 	
+	/*public ArrayList<Integer> getAllProductPartIds(){
+		results = null;
+		productPartIdsList.clear();
+		try{
+			results = gateway.getAllProductParts(id);
+			partId = results.getInt("partId");
+			productPartIdsList.add(partId);
+			while(results.next()){
+				partId = results.getInt("partId");
+				productPartIdsList.add(partId);
+			}
+		}catch(SQLException e){
+			throw new RuntimeException(e.getMessage());
+		}
+		return productPartIdsList;
+	}*/
 	public void closeView(productPartsListView view){
 		this.view = view;
 		this.view.closeWindow();
@@ -233,6 +253,7 @@ public class productModel {
 	
 	public ArrayList<String> getAllProducts(){
 		results = null;
+		productArrayList.clear();
 		try{
 			results = gateway.getAllProducts();
 			productNum = results.getString("productNum");
@@ -267,6 +288,22 @@ public class productModel {
 			throw new RuntimeException(e.getMessage());
 		}
 		return nameArrayList;
+	}
+	
+	public void getProductsDescription(){
+		results2 = null;
+		//productD.clear();
+		productD = new ArrayList();
+		try{
+			results2 = gateway.getAllProducts();
+			productD.add(results2.getString("productDesc"));
+			while(results2.next()){
+				productD.add(results2.getString("productDesc"));
+			}
+		}catch(SQLException e){
+			throw new RuntimeException(e.getMessage());
+		}
+		//return productD;
 	}
 	
 	public void addPartToProduct(String name, int q){
@@ -337,6 +374,33 @@ public class productModel {
 		return id;
 	}
 	
+	public int getProductId(String number) {
+		int id=0;
+		try{
+			results = gateway.getProductByNum(number);
+			id = results.getInt("id");
+		}catch(SQLException e){
+			throw new RuntimeException(e.getMessage());
+		}
+		return id;
+	}
+	
+	public int getProductIdByDesc(String desc) {
+		int id=0;
+		try{
+			results = gateway.getProductByDesc(desc);
+			id = results.getInt("id");
+		}catch(SQLException e){
+			throw new RuntimeException(e.getMessage());
+		}
+		return id;
+	}
+	
+	public String getProductDescById(int id) {
+		String str = gateway.getProductByDesc(id);
+		return str;
+	}
+	
 	/*gets and assigns values of currentObject*/
 	
 	public ArrayList getProductArray(){
@@ -346,6 +410,10 @@ public class productModel {
 	public ArrayList getProductPartsArray(){
 		return productPartsArrayList;
 	}
+	public ArrayList getProductDescArray() {
+		return productD;
+	}
+	
 	public String getProductNumber(){
 		return productNum;
 	}
@@ -367,6 +435,4 @@ public class productModel {
 		return this.id;
 	}
 	
-	
-
 }

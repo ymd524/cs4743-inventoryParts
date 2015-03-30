@@ -239,25 +239,6 @@ public class gatewaySQL {
         	}
         }
         timeUpdate(id);
-        /*Date today = new Date();     
-        SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String date = DATE_FORMAT.format(today);
-        System.out.println("format yyyy-MM-dd HH:mm:ss :" + date);
-        try {
-            stmt = conn.prepareStatement("UPDATE inventoryItems SET lastmodified = ? WHERE id = ?");
-            stmt.setString(1, date);
-            stmt.setInt(2, id);
-            stmt.execute();
-        } catch (SQLException e) {
-        	e.printStackTrace();
-        } finally {
-        	try {
-        		if(stmt != null)
-     			stmt.close();
-        	} catch(SQLException e) {
-        		e.printStackTrace();
-        	}
-        }	*/
 	}
 
 	public void updateInvL(String location, int id) {//locationId sent not name
@@ -304,14 +285,57 @@ public class gatewaySQL {
         }	
         timeUpdate(id);
 	}
+	
+	public void updateProductQ(int q, int id) {
+		// TODO Auto-generated method stub
+		PreparedStatement stmt = null;
+        try {
+            stmt = conn.prepareStatement("UPDATE inventoryItems SET quantity = ? WHERE productId = ?");
+            stmt.setInt(1, q);
+            stmt.setInt(2, id);
+            stmt.execute();
+        } catch (SQLException e) {
+        	e.printStackTrace();
+        } finally {
+        	try {
+        		if(stmt != null)
+     			stmt.close();
+        	} catch(SQLException e) {
+        		e.printStackTrace();
+        	}
+        }	
+        timeUpdate(id);
+	}
 
 	public void addInventoryItem(int partId, int locationId, int quantity){
 		PreparedStatement stmt = null;
         try {
-            stmt = conn.prepareStatement("INSERT INTO inventoryItems" + "(partId, locationId, quantity) VALUES" + "(?, ?, ?)");
+            stmt = conn.prepareStatement("INSERT INTO inventoryItems" + "(partId, productId, locationId, quantity) VALUES" + "(?, ?, ?, ?)");
             stmt.setInt(1, partId);
-            stmt.setInt(2, locationId);
-            stmt.setInt(3, quantity);
+            stmt.setInt(2, 0);
+            stmt.setInt(3, locationId);
+            stmt.setInt(4, quantity);
+            stmt.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+        	try {
+        		if(stmt != null)
+        			stmt.close();
+        	} catch(SQLException e) {
+        		e.printStackTrace();
+        	}
+        }		
+	}
+	
+	public void addProductItem(int product, int location){
+		PreparedStatement stmt = null;
+        try {
+            stmt = conn.prepareStatement("INSERT INTO inventoryItems" + "(partId, productId, locationId, quantity) VALUES" + "(?, ?, ?, ?)");
+            stmt.setInt(1, 0);
+            stmt.setInt(2, product);
+            stmt.setInt(3, location);
+            stmt.setInt(4, 1);
             stmt.execute();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -480,6 +504,7 @@ public class gatewaySQL {
 		
 		return id;
 	}
+	
 	public ResultSet getPartByName(String name){
 		PreparedStatement stmt = null;
 		try{
@@ -496,7 +521,7 @@ public class gatewaySQL {
 	
 	public ResultSet getPartsByLocation(String loc){
 		PreparedStatement stmt = null;
-		String str = null;
+		//String str = null;
 		try {
 			stmt = conn.prepareStatement("SELECT * FROM inventoryItems WHERE locationId = ? ");
 			stmt.setString(1, loc);
@@ -566,5 +591,33 @@ public class gatewaySQL {
         		e.printStackTrace();
         	}
         }	
+	}
+
+	public ResultSet getAllProducts(int location) {
+		// TODO Auto-generated method stub
+		PreparedStatement stmt = null;
+		try {
+			stmt = conn.prepareStatement("SELECT productId FROM inventoryItems WHERE locationId = ? ");
+			stmt.setInt(1, location);
+			rs = stmt.executeQuery();
+			rs.first();
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return rs;
+	}
+	
+	public ResultSet getProduct(int productId) {
+		// TODO Auto-generated method stub
+		PreparedStatement stmt = null;
+		try {
+			stmt = conn.prepareStatement("SELECT * FROM inventoryItems WHERE productId = ? ");
+			stmt.setInt(1, productId);
+			rs = stmt.executeQuery();
+			rs.first();
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return rs;
 	}
 }

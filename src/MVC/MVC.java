@@ -1,10 +1,10 @@
 package MVC;
 
-import java.awt.event.
-*
-;
+import java.awt.event.*;
+
 import javax.swing.JFrame;
 
+import MVC.controllers.invMenuController;
 import MVC.controllers.menuController;
 import MVC.controllers.showInventoryController;
 import MVC.controllers.showPartsController;
@@ -22,24 +22,25 @@ import MVC.views.productsViews.showTemplatesView;
 public class MVC {
 	
 
-		public static void main(String[] args) {	
+		public static void main(String[] args) {
 			
 			inventoryModel model = new inventoryModel();/* create new model, view and controller */
 			productModel proModel = new productModel();
-			showPartsView partView = new showPartsView(model);
+			showPartsView partView = new showPartsView(model, proModel);
 			showTemplatesView tempView = new showTemplatesView(proModel);
-			inventoryListView inventoryView = new inventoryListView(model);
-			showInventoryController inventoryController = new showInventoryController(inventoryView, model);
+			inventoryListView inventoryView = new inventoryListView(model, proModel);
+			showInventoryController inventoryController = new showInventoryController(inventoryView, model, proModel);
 			showPartsController controller = new showPartsController(partView, model);
 			showTemplatesController tempController = new showTemplatesController(tempView, proModel);
 			menuController menuController = new menuController(model, partView);
+			invMenuController menuController2 = new invMenuController(model, inventoryView, proModel);
 			
 			partView.registerListeners(controller, menuController);//register controllers as listeners
 			partView.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//starts up showPartsView
 			partView.setSize(400, 300);
 			partView.setVisible(true);		
 			
-			inventoryView.registerListeners(inventoryController, menuController);//register controllers as listeners
+			inventoryView.registerListeners(inventoryController, menuController2);//register controllers as listeners
 			inventoryView.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//starts up inventoryView
 			inventoryView.setSize(400, 300);
 			inventoryView.setLocation(400, 0);
@@ -48,7 +49,7 @@ public class MVC {
 			tempView.registerListeners(tempController);
 			tempView.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//starts up inventoryView
 			tempView.setSize(400,300);
-			tempView.setLocation(400,0);
+			tempView.setLocation(0,300);
 			tempView.setVisible(true);
 		
 		}
