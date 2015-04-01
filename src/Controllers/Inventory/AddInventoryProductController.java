@@ -72,6 +72,7 @@ public void actionPerformed(ActionEvent e) {
 		
 		if(flag == 1){
 			master.displayChildMessage("1 or more inventory parts do not have the minimum required amount to add this product");
+			flag = 0;
 		}else{
 			for (int i = 0; i < productPartList.size(); i++){
 				//for each part in list, get partId
@@ -92,11 +93,14 @@ public void actionPerformed(ActionEvent e) {
 			productQuantityInStock = model.getQuantityInStock(productId, locationId, "product");
 			if(productQuantityInStock == 0){
 				productQuantityInStock += 1;
-				model.setNewInventoryQuantity(locationId, productId, "product", productQuantityInStock);
+				model.addInventoryItem(productId, locationId, productQuantityInStock, "product");
+				
 				
 			}else{
+
 				productQuantityInStock += 1;
-				model.addInventoryItem(productId, locationId, productQuantityInStock, "product");
+				model.setNewInventoryQuantity(locationId, productId, "product", productQuantityInStock);
+				
 			}
 			master.displayChildMessage("Product add successful");
 		}

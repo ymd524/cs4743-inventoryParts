@@ -6,6 +6,7 @@ import MVC.Session;
 
 public class InventoryModel {
 	private ArrayList<InventoryItem> inventoryArrayList = new ArrayList();
+	private ArrayList<Integer> inventoryIdList = new ArrayList();
 	private ArrayList<String> locationsArrayList = new ArrayList();
 	private ArrayList<Integer> partIdsList = new ArrayList();
 	public inventoryGatewaySQL gateway = new inventoryGatewaySQL("ymd524", "ymd524", "HRqEF9KWp7MFw04SR0zZ");
@@ -14,12 +15,22 @@ public class InventoryModel {
 	private int quantity;
 	private InventoryItem item;
 	private Session session;
+	boolean check;
 	
 	public InventoryModel(){
 		
 	}
 	
-	public void addInventoryItem(int productPartId, int locationId, int quantity, String type){
+	public boolean checkInventory(int partId, int locationId, String type){
+		check = gateway.checkInventory(partId, locationId, type);
+		if (!check){
+			return false;
+		}else{
+			return true;
+		}
+	}
+	
+	public void addInventoryItem(int productPartId, int locationId, int quantity, String type){		
 		gateway.addInventoryItem(productPartId, locationId, quantity, type);
 	}
 	
@@ -40,7 +51,10 @@ public class InventoryModel {
 	}
 	
 	public void setInventoryArrayList(){
-		inventoryArrayList = gateway.getInventoryItemArrayList();
+		inventoryIdList = gateway.getInventoryItemArrayList();
+		for(int i = 0; i< inventoryIdList.size(); i++){
+			inventoryArrayList.add(gateway.getInventoryObjectById(inventoryIdList.get(i)));
+		}
 	}
 	
 	public ArrayList getInventoryArrayList(){
