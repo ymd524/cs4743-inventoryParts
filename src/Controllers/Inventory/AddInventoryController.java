@@ -17,6 +17,7 @@ public class AddInventoryController implements ActionListener {
 	private int locationId;
 	private int partId;
 	private int quantity;
+	private int newQuantity;
 
 
 	public AddInventoryController(AddInventoryPartView view, MasterFrame m){
@@ -34,8 +35,19 @@ public class AddInventoryController implements ActionListener {
 			master.getPartModel().setPartByName(partName);
 			partId = master.getPartModel().getCurrentPartObject().getId();
 			quantity = view.getQText();
-			model.addInventoryItem(partId, locationId, quantity, type);
-			
+			boolean check = model.checkInventory(partId, locationId, type);
+			if(!check){
+				model.addInventoryItem(partId, locationId, quantity, type);
+			}else{
+				
+				newQuantity = model.getQuantityInStock(partId, locationId, type);
+				newQuantity = newQuantity + quantity;
+				//System.out.println(newQuantity);
+				model.setNewInventoryQuantity(locationId, partId, type, newQuantity);
+				//System.out.println("inventory item already exists");
+				
+				master.displayChildMessage("Part add successful");
+			}
 			
 	}
 }

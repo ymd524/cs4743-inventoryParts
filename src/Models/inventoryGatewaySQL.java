@@ -15,7 +15,7 @@ public class inventoryGatewaySQL {
 	private ResultSet rs;
 	private ArrayList<String> locationsArray = new ArrayList();
 	private ArrayList<Integer> partsIds = new ArrayList();
-	private ArrayList<InventoryItem> inventoryItemObjectList = new ArrayList();
+	private ArrayList<Integer> inventoryItemObjectList = new ArrayList();
 	private InventoryItem inventoryObject;
 	private ResultSet results;
 	private String locationName;
@@ -107,6 +107,28 @@ public class inventoryGatewaySQL {
 		return q;
 	}
 	
+	public boolean checkInventory(int productPartId, int locationId, String type){
+		boolean check = false;
+		PreparedStatement stmt = null;
+        try {
+            stmt = conn.prepareStatement("SELECT * FROM inventoryItems WHERE productPartId = ? AND locationId = ? AND type = ?");
+            stmt.setInt(1, productPartId);
+            stmt.setInt(2, locationId);
+            stmt.setString(3, type);
+            rs = stmt.executeQuery();
+            if(!rs.next()){
+            	check= false;
+            }else{
+            	check = true;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return check;
+	}
+	
 	public ResultSet getInventoryQuantity(int productPartId, int locationId, String type){
 		
 		PreparedStatement stmt = null;
@@ -185,38 +207,36 @@ public class inventoryGatewaySQL {
         }
 	}
 	
-	
-	
-	public ResultSet getAllLocations(){
+	public ResultSet getAllLocationss(){
 		PreparedStatement stmt = null;
-	       try {
-	            stmt = conn.prepareStatement("SELECT * FROM locations");
-	            rs = stmt.executeQuery();
-	            rs.first();
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        }
-			
-			return rs;
+        try {
+            stmt = conn.prepareStatement("SELECT * FROM locations");
+            rs = stmt.executeQuery();
+            rs.first();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rs;
 	}
 	
-	
-	
-	
 	public ArrayList getLocationsArrayList(){
+		locationsArray = new ArrayList();
 		try{
-			results = getLocationNameResultsById(locationId);
+			results = getAllLocationss();
 			locationName = results.getString("name");
 			locationsArray.add(locationName);
 			while(results.next()){
 				locationName = results.getString("name");
-				locationsArray.add(locationName);
+				locationsArray.add(locationName);			
 			}
 		}catch(SQLException e){
 			e.printStackTrace();
 		}
 		return locationsArray;
 	}
+	
+	
+	
 	
 	public ResultSet getProductNameResultsById(int productId){
 		PreparedStatement stmt = null;
@@ -286,61 +306,75 @@ public class inventoryGatewaySQL {
 		}
 		return locationName;
 	}
+
 	
-	public ResultSet getAllInventoryItems(){
+	public ResultSet getInventoryById(int id){
 		PreparedStatement stmt = null;
-		try {
-			stmt = conn.prepareStatement("SELECT * FROM inventoryItems");
-			rs = stmt.executeQuery();
-		} catch (SQLException e) {
+        try {
+            stmt = conn.prepareStatement("SELECT * FROM inventoryItems WHERE id = ?");
+            stmt.setInt(1, id);
+            rs = stmt.executeQuery();
+            rs.first();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rs;
+	}
+	
+	
+	public InventoryItem getInventoryObjectById(int id){
+		
+		try{
+			results = getInventoryById(id);
+			itemId = results.getInt("id");
+			productPartId = results.getInt("productPartId");
+			locationId = results.getInt("locationId");
+			quantity = results.getInt("quantity");
+			type = results.getString("type");
+			if(type.equals("product")){
+				name = getProductNameById(productPartId);
+			}else if(type.equals("part")){
+				name = getPartNameById(productPartId);
+			}
+			location = getLocationNameById(locationId);
+			inventoryObject = new InventoryItem(itemId, productPartId, quantity, name, location, type);		
+		}catch(SQLException e){
 			e.printStackTrace();
 		}
-		return rs;
+		
+		return inventoryObject;
 	}
-
+	
+	
+	
+	
+	public ResultSet getAllInventory(){
+		PreparedStatement stmt = null;
+        try {
+            stmt = conn.prepareStatement("SELECT * FROM inventoryItems");
+            rs = stmt.executeQuery();
+            rs.first();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rs;
+	}
+	
 	public ArrayList getInventoryItemArrayList(){
 		inventoryItemObjectList = new ArrayList();
 		try{
-			results = getAllInventoryItems();
-			if(!results.next()){
-				return inventoryItemObjectList;
-			}else{
-				results.first();
+			results = getAllInventory();
+			itemId = results.getInt("id");
+			inventoryItemObjectList.add(itemId);
+			while(results.next()){
 				itemId = results.getInt("id");
-				productPartId = results.getInt("productPartId");
-				locationId = results.getInt("locationId");
-				quantity = results.getInt("quantity");
-				type = results.getString("type");
-				if(type.equals("product")){
-					name = getProductNameById(productPartId);
-				}else if(type.equals("part")){
-					name = getPartNameById(productPartId);
-				}
-				location = getLocationNameById(locationId);
-				inventoryObject = new InventoryItem(itemId, productPartId, quantity, name, location, type);			
-				inventoryItemObjectList.add(inventoryObject);
-				
-				while(results.next()){
-					itemId = results.getInt("id");
-					productPartId = results.getInt("productPartId");
-					locationId = results.getInt("locationId");
-					quantity = results.getInt("quantity");
-					type = results.getString("type");
-					if(type.equals("product")){
-						name = getProductNameById(productPartId);
-					}else if(type.equals("part")){
-						name = getPartNameById(productPartId);
-					}
-					location = getLocationNameById(locationId);
-					inventoryObject = new InventoryItem(itemId, productPartId, quantity, name, location, type);			
-					inventoryItemObjectList.add(inventoryObject);	
-				}
+				inventoryItemObjectList.add(itemId);		
 			}
 		}catch(SQLException e){
 			e.printStackTrace();
 		}
-		//System.out.println(inventoryItemObjectList.size());	
 		return inventoryItemObjectList;
 	}
+	
 	
 }
