@@ -94,8 +94,6 @@ public void actionPerformed(ActionEvent e) {
 			if(productQuantityInStock == 0){
 				productQuantityInStock += 1;
 				model.addInventoryItem(productId, locationId, productQuantityInStock, "product");
-				
-				
 			}else{
 
 				productQuantityInStock += 1;

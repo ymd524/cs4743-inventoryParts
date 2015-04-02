@@ -43,11 +43,11 @@ public class ShowPartsView extends JPanel{
 		model = master.getPartModel();
 		session = model.getSession();
 		
-		/*if(session == null || !session.canViewParts()){
+		if(session == null || !session.canViewParts()){
 			this.setLayout(new GridLayout(3,1));
 			this.add(access);
 			this.add(label);
-		}else{*/
+		}else{
 			this.setLayout(new BorderLayout());
 			ShowPartsController Controller = new ShowPartsController(this, master);
 			desktop = master.getDesktop();
@@ -57,9 +57,9 @@ public class ShowPartsView extends JPanel{
 			button.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					/*if(session == null || !session.canAddParts()){
+					if(session == null || !session.canAddParts()){
 						master.displayChildMessage("You do not have permission to add a part.");
-					}else{*/
+					}else{
 					
 					AddPartView child = new AddPartView(master);
 					JInternalFrame frame = new JInternalFrame(child.getTitle(), true, true, true, true );
@@ -73,7 +73,7 @@ public class ShowPartsView extends JPanel{
 					frame.setVisible(true);
 					master.addPartFrame(frame);
 					}
-				//}
+				}
 			});
 			
 			partArray=model.getPartArrayList();//gets ArrayList of names
@@ -89,7 +89,7 @@ public class ShowPartsView extends JPanel{
 			this.setPreferredSize(new Dimension(300, 300));
 			incrementTitle();
 		}
-	//}
+	}
 	
 	//set the title of the containing JInternalFrame
 	private void setInternalFrameTitle(String t) {
