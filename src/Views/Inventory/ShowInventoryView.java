@@ -47,6 +47,8 @@ public class ShowInventoryView extends JPanel {
 		public ShowInventoryView(MasterFrame m){
 			master = m;
 			model = master.getInventoryModel();
+			session = master.getSession();
+
 			
 			this.setLayout(new BorderLayout());
 			ShowInventoryController Controller = new ShowInventoryController(this, master);
@@ -57,9 +59,9 @@ public class ShowInventoryView extends JPanel {
 			addPart.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					/*if(session == null || !session.canAddParts()){
+					if(session == null || !session.canAddParts()){
 						master.displayChildMessage("You do not have permission to add a part.");
-					}else{*/
+					}else{
 					
 					AddInventoryPartView child = new AddInventoryPartView(master);
 					JInternalFrame frame = new JInternalFrame(child.getTitle(), true, true, true, true );
@@ -73,15 +75,16 @@ public class ShowInventoryView extends JPanel {
 					frame.setVisible(true);
 					master.addPartFrame(frame);
 					}
+				}
 			});
 			
 			addProduct = new JButton("Add New Product");
 			addProduct.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					/*if(session == null || !session.canAddParts()){
+					if(session == null || !session.canAddParts()){
 						master.displayChildMessage("You do not have permission to add a part.");
-					}else{*/
+					}else{
 					
 					AddInventoryProductView child = new AddInventoryProductView(master);
 					JInternalFrame frame = new JInternalFrame(child.getTitle(), true, true, true, true );
@@ -95,9 +98,10 @@ public class ShowInventoryView extends JPanel {
 					frame.setVisible(true);
 					master.addPartFrame(frame);
 					}
+				}
 			});
 			
-				//}
+				
 			
 			inventoryArray=model.getInventoryArrayList();//gets ArrayList of names
 			//System.out.println(inventoryArray.size());	
@@ -116,6 +120,7 @@ public class ShowInventoryView extends JPanel {
 				this.setPreferredSize(new Dimension(300, 300));
 				incrementTitle();
 			}
+		
 		
 		//set the title of the containing JInternalFrame
 		private void setInternalFrameTitle(String t) {
