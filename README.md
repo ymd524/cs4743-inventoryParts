@@ -14,5 +14,5 @@ editing inventory items.
 Also add class diagram to project. Includes my newly add files for adding and editing inventory views and controller.
 
 Assignment 5:
-Zach - I worked on the Inventory Item and Create Product. 
+Zach - I worked on the Inventory Item, Create Product and access control plan. 
 Richard implemented the Masterframe and worked on the Sessions, as well as rewrite the I did for Assignment 5 to run in the new Masterframe. Kudos to Sir Richard on getting it done.
